@@ -1,4 +1,5 @@
 import AWS from "aws-sdk";
+
 export async function uploadToS3(file: File) {
   try {
     AWS.config.update({
@@ -14,13 +15,13 @@ export async function uploadToS3(file: File) {
       },
     });
 
-    const fileKey =
+    const file_key =
       "uploads/" + Date.now().toString() + "-" + file.name.replace(" ", "-");
 
     const params = {
       Bucket: process.env.NEXT_PUBLIC_AWS_BUCKET_NAME!,
       Body: file,
-      Key: fileKey,
+      Key: file_key,
       ContentType: file.type,
     };
 
@@ -35,17 +36,17 @@ export async function uploadToS3(file: File) {
       .promise();
 
     await upload.then((data) => {
-      console.log("successfully upload to S3", fileKey);
+      console.log("successfully upload to S3", file_key);
     });
 
     return Promise.resolve({
-      file_key: fileKey,
+      file_key: file_key,
       file_name: file.name,
     });
   } catch (error) {}
 }
 
-export function getS3Url(fileKey: string) {
-  const url = `https://${process.env.NEXT_PUBLIC_AWS_BUCKET_NAME}.s3.ap-southeast-1.amazonaws.com/${fileKey}`;
+export function getS3Url(file_key: string) {
+  const url = `https://${process.env.NEXT_PUBLIC_AWS_BUCKET_NAME}.s3.ap-southeast-1.amazonaws.com/${file_key}`;
   return url;
 }
