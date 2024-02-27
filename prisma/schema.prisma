@@ -12,3 +12,28 @@ datasource db {
   provider = "mongodb"
   url      = env("DATABASE_URL")
 }
+
+model Chat {
+  id        String    @id @default(auto()) @map("_id") @db.ObjectId
+  fileName  String    @map("file_name")
+  fileUrll  String    @map("file_url")
+  createdAt DateTime  @default(now()) @map("created_at")
+  userId    String    @map("user_id")
+  fileKey   String    @map("file_key")
+  Message   Message[]
+}
+
+model Message {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  chatId    String   @map("chat_id") @db.ObjectId
+  chat      Chat     @relation(fields: [chatId], references: [id])
+  content   String
+  createdAt DateTime @default(now()) @map("created_at")
+  role      Role
+}
+
+enum Role {
+  SYSTEM    @map("system")
+  USER      @map("user")
+  ASSISTANT @map("assistant")
+}
