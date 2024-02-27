@@ -1,6 +1,4 @@
 import ChatSideBar from "@/app/components/ChatSideBar";
-import { db } from "@/lib/db";
-import { chats } from "@/lib/db/schema";
 import { auth } from "@clerk/nextjs";
 import { eq } from "drizzle-orm";
 import { redirect } from "next/navigation";
