@@ -23,6 +23,29 @@ model Chat {
   fileKey   String    @map("file_key")
 }
 
+model UploadedFile {
+  id        String      @id @default(auto()) @map("_id") @db.ObjectId
+  fileName  String      @map("file_name")
+  fileUrl   String      @map("file_url")
+  fileKey   String      @map("file_key")
+  fullText  String      @map("full_text")
+  Embedding Embedding[]
+
+  @@index([fileKey])
+}
+
+model Embedding {
+  id             String       @id @default(auto()) @map("_id") @db.ObjectId
+  chatId         String       @map("chat_id")
+  text           String
+  pageNumber     Json         @map("page_number")
+  wordSize       String       @map("word_size")
+  chunkId        Int          @map("chunk_id")
+  fileKey        String       @map("file_key")
+  UploadedFile   UploadedFile @relation(fields: [uploadedFileId], references: [id])
+  uploadedFileId String       @db.ObjectId
+}
+
 model Message {
   id        String   @id @default(auto()) @map("_id") @db.ObjectId
   chatId    String   @map("chat_id") @db.ObjectId
