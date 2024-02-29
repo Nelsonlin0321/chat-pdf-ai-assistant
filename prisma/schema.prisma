@@ -21,6 +21,8 @@ model Chat {
   fileName  String    @map("file_name")
   fileUrl   String    @map("file_url")
   fileKey   String    @map("file_key")
+
+  @@index([userId])
 }
 
 model UploadedFile {
@@ -43,7 +45,11 @@ model Embedding {
   chunkId        Int          @map("chunk_id")
   fileKey        String       @map("file_key")
   UploadedFile   UploadedFile @relation(fields: [uploadedFileId], references: [id])
-  uploadedFileId String       @db.ObjectId
+  uploadedFileId String       @map("uploaded_file_id") @db.ObjectId
+  embedding      Json
+
+  @@index([chatId])
+  @@index([fileKey])
 }
 
 model Message {
