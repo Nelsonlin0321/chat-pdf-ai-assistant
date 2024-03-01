@@ -1,0 +1,69 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+model Chat {
+  id        String    @id @default(auto()) @map("_id") @db.ObjectId
+  chatId    String    @map("chat_id")
+  createdAt DateTime  @default(now()) @map("created_at")
+  userId    String    @map("user_id")
+  Message   Message[]
+  fileUrl   String    @map("file_url")
+  fileKey   String    @map("file_key")
+
+  @@index([userId])
+  @@index([chatId])
+}
+
+model UploadedFile {
+  id        String      @id @default(auto()) @map("_id") @db.ObjectId
+  fileName  String      @map("file_name")
+  fileUrl   String      @map("file_url")
+  fileKey   String      @map("file_key")
+  fullText  String      @map("full_text")
+  Embedding Embedding[]
+
+  @@index([fileKey])
+}
+
+model Embedding {
+  id             String       @id @default(auto()) @map("_id") @db.ObjectId
+  chatId         String       @map("chat_id")
+  text           String
+  pageNumber     Json         @map("page_number")
+  wordSize       String       @map("word_size")
+  chunkId        Int          @map("chunk_id")
+  fileKey        String       @map("file_key")
+  UploadedFile   UploadedFile @relation(fields: [uploadedFileId], references: [id])
+  uploadedFileId String       @map("uploaded_file_id") @db.ObjectId
+  embedding      Json
+
+  @@index([chatId])
+  @@index([fileKey])
+}
+
+model Message {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  chatId    String   @map("chat_id") @db.ObjectId
+  chat      Chat     @relation(fields: [chatId], references: [id])
+  content   String
+  createdAt DateTime @default(now()) @map("created_at")
+  role      Role
+}
+
+enum Role {
+  SYSTEM    @map("system")
+  USER      @map("user")
+  ASSISTANT @map("assistant")
+}
