@@ -1,31 +1,19 @@
 "use client";
-import { uploadToS3 } from "@/lib/s3";
-import { useMutation } from "@tanstack/react-query";
 import { Inbox, Loader2 } from "lucide-react";
 import { useState } from "react";
 import { useDropzone } from "react-dropzone";
 import axios from "axios";
 import toast from "react-hot-toast";
+import { auth } from "@clerk/nextjs";
+import { v4 as uuidv4 } from "uuid";
+import FormData from "form-data";
 
-const FileUpload = () => {
+const s3RootDir = process.env.NEXT_PUBLIC_S3_ROOT_DIR;
+
+const FileUpload = async () => {
   const [isLoading, setLoading] = useState(false);
 
-  const { mutate, isPending } = useMutation({
-    mutationFn: async ({
-      file_key,
-      file_name,
-    }: {
-      file_key: string;
-      file_name: string;
-    }) => {
-      const response = await axios.post("api/create-chat", {
-        file_name,
-        file_key,
-      });
-      console.log(response.data);
-      return response.data;
-    },
-  });
+  const { userId } = await auth();
 
   const { getRootProps, getInputProps } = useDropzone({
     accept: { "application/pdf": [".pdf"] },
@@ -37,22 +25,28 @@ const FileUpload = () => {
         toast.error("File is too large");
         return;
       }
+
       try {
         setLoading(true);
-        const data = await uploadToS3(file);
-        if (!data?.file_key || !data.file_name) {
-          toast.success("Failed to upload file");
-          return;
-        }
+        const fileName = file.name;
+        const chatId = uuidv4();
+        const fileKey = `${s3RootDir}/${userId}/${chatId}/${fileName}`;
+        const formData = new FormData();
+        formData.append("file_key", fileKey);
+        formData.append("chat_id", chatId);
+        formData.append("file", file, {
+          knownLength: file.size,
+          contentType: "application/pdf",
+        });
 
-        mutate(data, {
-          onSuccess: (data) => {
-            toast.success(data.message);
-          },
-          onError: (err) => {
-            toast.error("Failed to upload file");
+        await axios.post("api/create-chat", formData, {
+          headers: {
+            accept: "application/json",
+            "Content-Type": "multipart/form-data",
           },
         });
+
+        toast.success("Uploaded file successfully");
       } catch (error) {
         toast.error("Error creating chat");
       } finally {
@@ -70,7 +64,7 @@ const FileUpload = () => {
           })}
         >
           <input {...getInputProps()} />
-          {isLoading || isPending ? (
+          {isLoading ? (
             <>
               <Loader2 className="h-10 w-10 text-blue-500 animate-spin" />
               <p> Spilling Tea to GPT...</p>

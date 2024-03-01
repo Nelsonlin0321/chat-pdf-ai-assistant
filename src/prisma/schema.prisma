@@ -15,14 +15,15 @@ datasource db {
 
 model Chat {
   id        String    @id @default(auto()) @map("_id") @db.ObjectId
+  chatId    String    @map("chat_id") @db.ObjectId
   createdAt DateTime  @default(now()) @map("created_at")
   userId    String    @map("user_id")
   Message   Message[]
-  fileName  String    @map("file_name")
   fileUrl   String    @map("file_url")
   fileKey   String    @map("file_key")
 
   @@index([userId])
+  @@index([chatId])
 }
 
 model UploadedFile {
