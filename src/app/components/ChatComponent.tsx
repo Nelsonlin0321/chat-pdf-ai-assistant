@@ -3,9 +3,10 @@ import { Input } from "./ui/input";
 import React from "react";
 import { useChat } from "ai/react";
 import { Button } from "./ui/button";
-import { Send } from "lucide-react";
+import { Send, StopCircle } from "lucide-react";
 import MessageList from "./MessageList";
 import { Message } from "@prisma/client";
+import StopButton from "./StopButton";
 
 type Props = {
   file_key: string;
@@ -20,7 +21,7 @@ function extractUserQuestion(text: string): string | null {
 }
 
 const ChatComponent = ({ file_key, chat_id, initMessages }: Props) => {
-  const { input, handleInputChange, handleSubmit, messages, isLoading } =
+  const { input, handleInputChange, handleSubmit, messages, stop, isLoading } =
     useChat({
       api: "/api/chat",
       body: { file_key, chat_id },
@@ -46,19 +47,24 @@ const ChatComponent = ({ file_key, chat_id, initMessages }: Props) => {
         <h3 className="text-xl font-bold">Chat Component</h3>
       </div>
 
-      <MessageList messages={reconstructedMessages} />
+      <MessageList messages={reconstructedMessages} isLoading={false} />
 
       <form
         className="sticky bottom-0 inset-x-0 px-2 py-10 bg-white"
         onSubmit={handleSubmit}
       >
         <div className="flex gap-2 w-full">
-          <Input
-            value={input}
-            onChange={handleInputChange}
-            placeholder="Ask any question ..."
-            className="mb-4"
-          />
+          {isLoading ? (
+            <StopButton onStop={stop} />
+          ) : (
+            <Input
+              value={input}
+              onChange={handleInputChange}
+              placeholder="Ask any question ..."
+              className="mb-4"
+            />
+          )}
+
           <Button className="bg-blue-600" disabled={isLoading} type="submit">
             <Send className="h-4 w-4" />
           </Button>

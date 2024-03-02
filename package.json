@@ -15,6 +15,7 @@
     "@prisma/extension-accelerate": "^1.0.0",
     "@radix-ui/react-slot": "^1.0.2",
     "@tanstack/react-query": "^5.24.1",
+    "@uiw/react-markdown-preview": "^5.0.7",
     "ai": "^3.0.2",
     "aws-sdk": "^2.1565.0",
     "axios": "^1.6.7",
@@ -30,6 +31,7 @@
     "react-dom": "^18",
     "react-dropzone": "^14.2.3",
     "react-hot-toast": "^2.4.1",
+    "react-markdown": "^9.0.1",
     "tailwind-merge": "^2.2.1",
     "tailwindcss-animate": "^1.0.7",
     "uuid": "^9.0.1"
