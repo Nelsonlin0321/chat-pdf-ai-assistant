@@ -3,7 +3,7 @@ import { Input } from "./ui/input";
 import React from "react";
 import { useChat } from "ai/react";
 import { Button } from "./ui/button";
-import { Send, StopCircle } from "lucide-react";
+import { Send } from "lucide-react";
 import MessageList from "./MessageList";
 import { Message } from "@prisma/client";
 import StopButton from "./StopButton";
@@ -35,16 +35,17 @@ const ChatComponent = ({ file_key, chat_id, initMessages }: Props) => {
       return message;
     }
   });
-  const template_chats = [
-    { id: "1", content: "Hi", role: "user" },
-    { id: "2", content: "How can I help you?", role: "assistant" },
-  ];
+
+  // const template_chats = [
+  //   { id: "1", content: "Hi", role: "user" },
+  //   { id: "2", content: "How can I help you?", role: "assistant" },
+  // ];
 
   return (
     <div className="relative max-h-screen">
       {/* header */}
       <div className="sticky top-0 inset-x-0 p-2 bg-white h-fit">
-        <h3 className="text-xl font-bold">Chat Component</h3>
+        <h3 className="text-xl font-bold sticky top-0 left-0">Chat Room</h3>
       </div>
 
       <MessageList messages={reconstructedMessages} isLoading={isLoading} />

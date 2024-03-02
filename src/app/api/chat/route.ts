@@ -74,7 +74,8 @@ export async function POST(req: Request) {
 
   // Convert the response into a friendly text-stream
   const stream = GoogleGenerativeAIStream(geminiStream, {
-    onStart: async () => {
+    // onStart: async () => {},
+    onCompletion: async (completion) => {
       await prisma.message.create({
         data: {
           chatId: chat_id,
@@ -82,8 +83,7 @@ export async function POST(req: Request) {
           role: lastMessage.role,
         },
       });
-    },
-    onCompletion: async (completion) => {
+
       await prisma.message.create({
         data: {
           chatId: chat_id,
