@@ -47,7 +47,7 @@ const ChatComponent = ({ file_key, chat_id, initMessages }: Props) => {
         <h3 className="text-xl font-bold">Chat Component</h3>
       </div>
 
-      <MessageList messages={reconstructedMessages} isLoading={false} />
+      <MessageList messages={reconstructedMessages} isLoading={isLoading} />
 
       <form
         className="sticky bottom-0 inset-x-0 px-2 py-10 bg-white"
