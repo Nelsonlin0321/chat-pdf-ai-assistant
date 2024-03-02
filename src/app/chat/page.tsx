@@ -8,12 +8,12 @@ const ChatHomePage = async () => {
     return redirect("./sign-in");
   }
 
-  const _chats = await prisma.chat.findFirst({ where: { userId: userId } });
-  if (!_chats) {
+  const _chat = await prisma.chat.findFirst({ where: { userId: userId } });
+  if (!_chat) {
     return redirect("/");
   }
 
-  const chatId = _chats.chatId;
+  const chatId = _chat.chatId;
 
   return redirect("/chat/" + chatId);
 };

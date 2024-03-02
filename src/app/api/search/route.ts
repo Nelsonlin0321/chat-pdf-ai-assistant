@@ -1,6 +1,11 @@
 import apiClient from "@/app/services/api-client";
 import { NextRequest, NextResponse } from "next/server";
 
+export type DocMeta = {
+  text: string;
+  page_number: number[];
+};
+
 export async function GET(req: NextRequest) {
   const searchParams = req.nextUrl.searchParams;
   const file_key = searchParams.get("file_key");
@@ -29,5 +34,7 @@ export async function GET(req: NextRequest) {
   }
   const data = { file_key: file_key, query, limit: 5 };
   const response = await apiClient.get("/" + search_type, { params: data });
-  return NextResponse.json(response.data, { status: 200 });
+
+  const docsResults: DocMeta[] = response.data;
+  return NextResponse.json(docsResults, { status: 200 });
 }

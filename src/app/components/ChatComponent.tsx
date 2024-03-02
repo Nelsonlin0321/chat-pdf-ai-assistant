@@ -5,12 +5,34 @@ import { useChat } from "ai/react";
 import { Button } from "./ui/button";
 import { Send } from "lucide-react";
 import MessageList from "./MessageList";
+import { Message } from "ai";
 
-type Props = {};
+type Props = {
+  file_key: string;
+};
 
-const ChatComponent = (props: Props) => {
+function extractUserQuestion(text: string): string | null {
+  const regex = /QUESTION\s*->\s*(.*?)\s*\n/;
+  const match = text.match(regex);
+  return match ? match[1] : text;
+}
+
+const ChatComponent = ({ file_key }: Props) => {
   const { input, handleInputChange, handleSubmit, messages, isLoading } =
-    useChat({ api: "api/chat" });
+    useChat({ api: "/api/chat", body: { file_key } });
+
+  const reconstructedMessages = messages.map((message) => {
+    if (message.role === "user") {
+      return { ...message, content: extractUserQuestion(message.content)! };
+    } else {
+      return message;
+    }
+  });
+  const template_chats = [
+    { id: "1", content: "Hi", role: "user" },
+    { id: "2", content: "How can I help you?", role: "assistant" },
+  ];
+
   return (
     <div className="relative max-h-screen">
       {/* header */}
@@ -18,12 +40,7 @@ const ChatComponent = (props: Props) => {
         <h3 className="text-xl font-bold">Chat Component</h3>
       </div>
 
-      <MessageList
-        messages={[
-          { id: "1", content: "Hi", role: "user" },
-          { id: "2", content: "How can I help you?", role: "assistant" },
-        ]}
-      />
+      <MessageList messages={reconstructedMessages} />
 
       <form
         className="sticky bottom-0 inset-x-0 px-2 py-10 bg-white"

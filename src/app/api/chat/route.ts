@@ -1,5 +1,6 @@
 import { GoogleGenerativeAI } from "@google/generative-ai";
 import { GoogleGenerativeAIStream, Message, StreamingTextResponse } from "ai";
+import { DocMeta } from "../search/route";
 
 const genAI = new GoogleGenerativeAI(process.env.GOOGLE_API_KEY || "");
 
@@ -19,13 +20,49 @@ const buildGoogleGenAIPrompt = (messages: Message[]) => ({
     })),
 });
 
+function getPrompt(message: Message, context: string) {
+  return {
+    ...message,
+    role: "user",
+    content: `Answer below the question by searching the given context below: 
+    question -> ${message.content}.
+    context : ${context}`,
+  } as Message;
+}
+
+async function buildRAGPrompt(messages: Message[], file_key: string) {
+  const lastMessage = messages[messages.length - 1];
+
+  const docsResults = await fetch(
+    "http://localhost:3000/api/search" +
+      "?" +
+      `file_key=${file_key}&query=${lastMessage.content}&limit=10`
+  )
+    .then((response) => response.json())
+    .then((data) => {
+      return data as DocMeta[];
+    });
+
+  const context = docsResults
+    .map((doc) => doc.text)
+    .join("\n")
+    .substring(0, 5000);
+
+  const prompt: Message = getPrompt(lastMessage, context);
+
+  messages[messages.length - 1] = prompt;
+  return messages;
+}
+
 export async function POST(req: Request) {
   // Extract the `prompt` from the body of the request
-  const { messages } = await req.json();
+  const { messages, file_key } = await req.json();
 
+  const ragPromptMessages = await buildRAGPrompt(messages, file_key);
+  console.log(ragPromptMessages);
   const geminiStream = await genAI
     .getGenerativeModel({ model: "gemini-pro" })
-    .generateContentStream(buildGoogleGenAIPrompt(messages));
+    .generateContentStream(buildGoogleGenAIPrompt(ragPromptMessages));
 
   // Convert the response into a friendly text-stream
   const stream = GoogleGenerativeAIStream(geminiStream);
