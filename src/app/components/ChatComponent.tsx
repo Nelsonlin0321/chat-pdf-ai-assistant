@@ -9,6 +9,7 @@ import { Message } from "ai";
 
 type Props = {
   file_key: string;
+  chat_id: string;
 };
 
 function extractUserQuestion(text: string): string | null {
@@ -17,9 +18,9 @@ function extractUserQuestion(text: string): string | null {
   return match ? match[1] : text;
 }
 
-const ChatComponent = ({ file_key }: Props) => {
+const ChatComponent = ({ file_key, chat_id }: Props) => {
   const { input, handleInputChange, handleSubmit, messages, isLoading } =
-    useChat({ api: "/api/chat", body: { file_key } });
+    useChat({ api: "/api/chat", body: { file_key, chat_id } });
 
   const reconstructedMessages = messages.map((message) => {
     if (message.role === "user") {

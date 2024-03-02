@@ -9,13 +9,14 @@ generator client {
 }
 
 datasource db {
-  provider = "mongodb"
-  url      = env("DATABASE_URL")
+  provider  = "mongodb"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_DATABASE_URL")
 }
 
 model Chat {
   id        String    @id @default(auto()) @map("_id") @db.ObjectId
-  chatId    String    @map("chat_id")
+  chatId    String    @unique @map("chat_id")
   createdAt DateTime  @default(now()) @map("created_at")
   userId    String    @map("user_id")
   Message   Message[]
@@ -23,7 +24,6 @@ model Chat {
   fileKey   String    @map("file_key")
 
   @@index([userId])
-  @@index([chatId])
 }
 
 model UploadedFile {
@@ -55,15 +55,15 @@ model Embedding {
 
 model Message {
   id        String   @id @default(auto()) @map("_id") @db.ObjectId
-  chatId    String   @map("chat_id") @db.ObjectId
-  chat      Chat     @relation(fields: [chatId], references: [id])
+  chatId    String   @map("chat_id")
+  chat      Chat     @relation(fields: [chatId], references: [chatId])
   content   String
   createdAt DateTime @default(now()) @map("created_at")
   role      Role
 }
 
 enum Role {
-  SYSTEM    @map("system")
-  USER      @map("user")
-  ASSISTANT @map("assistant")
+  system    @map("system")
+  user      @map("user")
+  assistant @map("assistant")
 }

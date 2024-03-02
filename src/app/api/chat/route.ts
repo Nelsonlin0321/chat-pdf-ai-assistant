@@ -1,6 +1,11 @@
 import { GoogleGenerativeAI } from "@google/generative-ai";
 import { GoogleGenerativeAIStream, Message, StreamingTextResponse } from "ai";
 import { DocMeta } from "../search/route";
+import { PrismaClient } from "@prisma/client/edge";
+import { withAccelerate } from "@prisma/extension-accelerate";
+import { auth } from "@clerk/nextjs";
+
+const prisma = new PrismaClient().$extends(withAccelerate());
 
 const genAI = new GoogleGenerativeAI(process.env.GOOGLE_API_KEY || "");
 
@@ -58,15 +63,35 @@ async function buildRAGPrompt(messages: Message[], file_key: string) {
 
 export async function POST(req: Request) {
   // Extract the `prompt` from the body of the request
-  const { messages, file_key } = await req.json();
-
+  const { messages, file_key, chat_id } = await req.json();
+  const { userId } = await auth();
+  const lastMessage = messages[messages.length - 1];
   const ragPromptMessages = await buildRAGPrompt(messages, file_key);
   const geminiStream = await genAI
     .getGenerativeModel({ model: "gemini-pro" })
     .generateContentStream(buildGoogleGenAIPrompt(ragPromptMessages));
 
   // Convert the response into a friendly text-stream
-  const stream = GoogleGenerativeAIStream(geminiStream);
+  const stream = GoogleGenerativeAIStream(geminiStream, {
+    onStart: async () => {
+      await prisma.message.create({
+        data: {
+          chatId: chat_id,
+          content: lastMessage.content,
+          role: lastMessage.role,
+        },
+      });
+    },
+    onCompletion: async (completion) => {
+      await prisma.message.create({
+        data: {
+          chatId: chat_id,
+          content: completion,
+          role: "assistant",
+        },
+      });
+    },
+  });
 
   // Respond with the stream
   return new StreamingTextResponse(stream);
