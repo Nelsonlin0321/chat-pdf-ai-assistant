@@ -24,9 +24,11 @@ function getPrompt(message: Message, context: string) {
   return {
     ...message,
     role: "user",
-    content: `Answer below the question by searching the given context below: 
-    question -> ${message.content}.
-    context : ${context}`,
+    content: `Answer below question without any prior knowledge and only based on the given context within CONTEXT BLOCK: 
+    ---------------------
+    QUESTION -> ${message.content}.
+    ---------------------
+    CONTEXT BLOCK -> ${context}`,
   } as Message;
 }
 
@@ -36,7 +38,7 @@ async function buildRAGPrompt(messages: Message[], file_key: string) {
   const docsResults = await fetch(
     "http://localhost:3000/api/search" +
       "?" +
-      `file_key=${file_key}&query=${lastMessage.content}&limit=10`
+      `file_key=${file_key}&query=${lastMessage.content}&limit=5`
   )
     .then((response) => response.json())
     .then((data) => {
@@ -59,7 +61,6 @@ export async function POST(req: Request) {
   const { messages, file_key } = await req.json();
 
   const ragPromptMessages = await buildRAGPrompt(messages, file_key);
-  console.log(ragPromptMessages);
   const geminiStream = await genAI
     .getGenerativeModel({ model: "gemini-pro" })
     .generateContentStream(buildGoogleGenAIPrompt(ragPromptMessages));

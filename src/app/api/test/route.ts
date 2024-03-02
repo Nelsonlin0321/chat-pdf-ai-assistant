@@ -8,7 +8,7 @@ function extractUserQuestion(text: string): string | null {
 
 const text = `Given the context within CONTEXT BLOCK and not prior knowledge, answer the question: 
     ---------------------
-    QUESTIN -> How are you ?
+    QUESTION -> How are you ?
     ---------------------
     CONTEXT BLOCK ->
     some content
@@ -19,7 +19,6 @@ export async function GET(req: NextRequest) {
   messages[0] = 100;
 
   const userQuestion = extractUserQuestion(text);
-  // console.log(userQuestion); // Output: How are you ?
 
   return NextResponse.json({ message: userQuestion }, { status: 200 });
 }
