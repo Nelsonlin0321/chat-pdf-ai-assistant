@@ -31,6 +31,15 @@ const ChatPage = async ({ params: { chatId } }: Props) => {
     return redirect("/chat");
   }
 
+  const initMessages = await prisma.message.findMany({
+    where: { chatId: _chat.chatId },
+    // select: {
+    //   id: true,
+    //   content: true,
+    //   role: true,
+    // },
+  });
+
   return (
     <div className="flex max-h-screen">
       <div className="flex w-full max-h-screen">
@@ -42,7 +51,11 @@ const ChatPage = async ({ params: { chatId } }: Props) => {
           <PDFViewer pdf_url={_chat.fileUrl} />
         </div>
         <div className="flex-[3] border-1-4 border-l-slate-200">
-          <ChatComponent file_key={_chat.fileKey} chat_id={_chat.chatId} />
+          <ChatComponent
+            file_key={_chat.fileKey}
+            chat_id={_chat.chatId}
+            initMessages={initMessages}
+          />
         </div>
       </div>
     </div>

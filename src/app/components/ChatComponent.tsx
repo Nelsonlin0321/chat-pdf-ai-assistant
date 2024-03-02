@@ -5,11 +5,12 @@ import { useChat } from "ai/react";
 import { Button } from "./ui/button";
 import { Send } from "lucide-react";
 import MessageList from "./MessageList";
-import { Message } from "ai";
+import { Message } from "@prisma/client";
 
 type Props = {
   file_key: string;
   chat_id: string;
+  initMessages: Message[];
 };
 
 function extractUserQuestion(text: string): string | null {
@@ -18,9 +19,13 @@ function extractUserQuestion(text: string): string | null {
   return match ? match[1] : text;
 }
 
-const ChatComponent = ({ file_key, chat_id }: Props) => {
+const ChatComponent = ({ file_key, chat_id, initMessages }: Props) => {
   const { input, handleInputChange, handleSubmit, messages, isLoading } =
-    useChat({ api: "/api/chat", body: { file_key, chat_id } });
+    useChat({
+      api: "/api/chat",
+      body: { file_key, chat_id },
+      initialMessages: initMessages,
+    });
 
   const reconstructedMessages = messages.map((message) => {
     if (message.role === "user") {
