@@ -1,3 +1,4 @@
+import ChatComponent from "@/app/components/ChatComponent";
 import ChatSideBar from "@/app/components/ChatSideBar";
 import PDFViewer from "@/app/components/PDFViewer";
 import prisma from "@/prisma/client";
@@ -26,10 +27,6 @@ const ChatPage = async ({ params: { chatId } }: Props) => {
 
   const _chat = _chats.find((chat) => chat.chatId === chatId);
 
-  if (!_chat) {
-    return redirect("/");
-  }
-
   return (
     <div className="flex max-h-screen">
       <div className="flex w-full max-h-screen">
@@ -38,10 +35,12 @@ const ChatPage = async ({ params: { chatId } }: Props) => {
           <ChatSideBar chats={_chats} chatId={chatId} />
         </div>
         <div className="max-h-screen p-4 overflow-scroll flex-[5]">
-          <PDFViewer pdf_url={_chat.fileUrl} />
+          <PDFViewer
+            pdf_url={_chat?.fileUrl ? _chat?.fileUrl : "https://example.pdf"}
+          />
         </div>
         <div className="flex-[3] border-1-4 border-l-slate-200">
-          {/* ChatCOmponent*/}
+          <ChatComponent />
         </div>
       </div>
     </div>
