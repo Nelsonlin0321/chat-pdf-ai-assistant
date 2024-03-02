@@ -1,6 +1,7 @@
 import { cn } from "@/lib/utils";
 import { Message } from "ai";
 import React from "react";
+import { Bot } from "lucide-react";
 
 type Props = {
   messages: Message[];
@@ -20,15 +21,18 @@ const MessageList = ({ messages }: Props) => {
               "justify-start pr-10": message.role === "assistant",
             })}
           >
-            <div
-              className={cn(
-                "rounded-lg px-3 text-sm py-1 shadow-md ring-1 ring-gray-900/10",
-                {
-                  " bg-blue-600 text-white": message.role === "user",
-                }
-              )}
-            >
-              <p>{message.content}</p>
+            <div className="flex">
+              {message.role !== "user" && <Bot className="mr-3" />}
+              <div
+                className={cn(
+                  "rounded-lg px-3 text-sm py-1 shadow-md ring-1 ring-gray-900/10",
+                  {
+                    " bg-blue-600 text-white": message.role === "user",
+                  }
+                )}
+              >
+                <p>{message.content}</p>
+              </div>
             </div>
           </div>
         );
