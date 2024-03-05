@@ -26,7 +26,6 @@ const buildChatPrompt = (messages: Message[]) => {
   }
 
   chatMessages = chatMessages.reverse();
-  console.log(chatMessages);
   return chatMessages;
 };
 // IMPORTANT! Set the runtime to edge
@@ -49,7 +48,8 @@ function getPrompt(message: Message, context: string) {
   return {
     ...message,
     role: "user",
-    content: `Answer below question without any prior knowledge and only based on the given context within CONTEXT BLOCK: 
+    content: `Answer below question without any prior knowledge and only based on the given context within CONTEXT BLOCK, 
+    ,and tell user where you get the answers if the question is relevant to the question: 
     ---------------------
     QUESTION -> ${message.content}.
     ---------------------
@@ -76,7 +76,7 @@ async function buildRAGPrompt(messages: Message[], file_key: string) {
       file_key,
       query: lastMessage.content,
       limit: 5,
-      search_type: "keyword_search",
+      search_type: "hybrid_search",
     },
   });
   const docsResults = response.data as DocMeta[];
