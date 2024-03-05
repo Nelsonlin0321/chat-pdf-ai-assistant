@@ -19,7 +19,11 @@ export default async function Home() {
           </div>
 
           <div className="flex mt-2">
-            {isAuth && <Button>Go to Chats</Button>}
+            {isAuth && (
+              <Link href={"/chat"}>
+                <Button>Go to Chats</Button>
+              </Link>
+            )}
           </div>
 
           <p className="max-w-xl mt-1 text-lg text-slate-600">
