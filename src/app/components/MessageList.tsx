@@ -9,15 +9,23 @@ import ChatMessage from "./ChatMessage";
 type Props = {
   messages: Message[];
   isLoading: boolean;
+  setMessages: (messages: Message[]) => void;
 };
 
-const MessageList = ({ messages, isLoading }: Props) => {
+const MessageList = ({ messages, isLoading, setMessages }: Props) => {
   if (!messages) return <></>;
 
   return (
     <div className="flex flex-col gap-2 px-4 py-2 overflow-scroll">
       {messages.map((message) => {
-        return <ChatMessage message={message} key={message.id} />;
+        return (
+          <ChatMessage
+            message={message}
+            key={message.id}
+            messages={messages}
+            setMessages={setMessages}
+          />
+        );
       })}
       {isLoading && (
         <>

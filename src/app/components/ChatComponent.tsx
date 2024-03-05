@@ -29,6 +29,7 @@ const ChatComponent = ({ file_key, chat_id, initMessages }: Props) => {
     messages,
     stop,
     isLoading,
+    setMessages,
     error,
   } = useChat({
     api: "/api/chat",
@@ -58,7 +59,11 @@ const ChatComponent = ({ file_key, chat_id, initMessages }: Props) => {
   return (
     <>
       <div>
-        <MessageList messages={reconstructedMessages} isLoading={isLoading} />
+        <MessageList
+          messages={reconstructedMessages}
+          isLoading={isLoading}
+          setMessages={setMessages}
+        />
 
         <form
           className="sticky bottom-0 inset-x-0 px-2 py-10 bg-slate-100"

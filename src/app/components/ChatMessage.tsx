@@ -6,14 +6,14 @@ import { PiTrashSimpleBold } from "react-icons/pi";
 import MarkdownPreview from "@uiw/react-markdown-preview";
 import { Bot } from "lucide-react";
 import axios from "axios";
-import { useRouter } from "next/navigation";
 
 type Props = {
   message: Message;
+  messages: Message[];
+  setMessages: (messages: Message[]) => void;
 };
 
-const ChatMessage = ({ message }: Props) => {
-  const router = useRouter();
+const ChatMessage = ({ message, messages, setMessages }: Props) => {
   const [isHovered, setIsHovered] = useState(false);
 
   return (
@@ -34,8 +34,8 @@ const ChatMessage = ({ message }: Props) => {
               size={15}
               className=" text-slate-400 shrink-0 cursor-pointer"
               onClick={async () => {
-                await axios.delete("/api/message/" + message.id);
-                router.refresh();
+                setMessages([...messages.filter((m) => m.id !== message.id)]);
+                axios.delete("/api/message/" + message.id);
               }}
             />
           )}
@@ -65,8 +65,8 @@ const ChatMessage = ({ message }: Props) => {
               size={15}
               className=" text-slate-400 shrink-0 cursor-pointer"
               onClick={async () => {
-                await axios.delete("/api/message/" + message.id);
-                router.refresh();
+                setMessages([...messages.filter((m) => m.id !== message.id)]);
+                axios.delete("/api/message/" + message.id);
               }}
             />
           )}
