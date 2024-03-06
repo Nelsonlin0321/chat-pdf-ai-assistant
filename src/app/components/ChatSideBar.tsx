@@ -6,6 +6,8 @@ import { Chat } from "@prisma/client";
 import path from "path";
 import { cn } from "@/lib/utils";
 import { PiTrashSimpleBold } from "react-icons/pi";
+import DeleteChatFileAlert from "./DeleteChatFIleAlert";
+import { Message } from "ai";
 
 type Props = {
   chats: Chat[];
@@ -38,10 +40,7 @@ const ChatSideBar = ({ chats, chatId }: Props) => {
               >
                 {path.basename(chat.fileKey)}
               </Link>
-              <PiTrashSimpleBold
-                size={15}
-                className=" text-slate-400 shrink-0 cursor-pointer"
-              />
+              <DeleteChatFileAlert chatId={chatId} />
             </div>
           </div>
         ))}
