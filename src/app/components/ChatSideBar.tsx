@@ -5,6 +5,7 @@ import { MessageCircle, PlusCircle } from "lucide-react";
 import { Chat } from "@prisma/client";
 import path from "path";
 import { cn } from "@/lib/utils";
+import { PiTrashSimpleBold } from "react-icons/pi";
 
 type Props = {
   chats: Chat[];
@@ -23,7 +24,7 @@ const ChatSideBar = ({ chats, chatId }: Props) => {
 
       <div className="flex flex-col gap-2 mt-4">
         {chats.map((chat) => (
-          <Link key={chat.id} href={`/chat/${chat.chatId}`}>
+          <div key={chat.id}>
             <div
               className={cn("rounded-lg p-3 text-slate-300 flex items-center", {
                 "bg-blue-600 text-white": chat.chatId === chatId,
@@ -31,11 +32,18 @@ const ChatSideBar = ({ chats, chatId }: Props) => {
               })}
             >
               <MessageCircle className="mr-2" />
-              <p className="w-full overflow-hidden text-sm truncate whitespace-nowrap text-ellipsis">
+              <Link
+                className="w-full overflow-hidden text-sm truncate whitespace-nowrap text-ellipsis"
+                href={"/chat/" + chat.chatId}
+              >
                 {path.basename(chat.fileKey)}
-              </p>
+              </Link>
+              <PiTrashSimpleBold
+                size={15}
+                className=" text-slate-400 shrink-0 cursor-pointer"
+              />
             </div>
-          </Link>
+          </div>
         ))}
       </div>
 
