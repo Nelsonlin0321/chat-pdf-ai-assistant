@@ -1,13 +1,10 @@
-import Link from "next/link";
-import React from "react";
-import { Button } from "./ui/button";
-import { MessageCircle, PlusCircle } from "lucide-react";
-import { Chat } from "@prisma/client";
-import path from "path";
 import { cn } from "@/lib/utils";
-import { PiTrashSimpleBold } from "react-icons/pi";
-import DeleteChatFileAlert from "./DeleteChatFIleAlert";
-import { Message } from "ai";
+import { Chat } from "@prisma/client";
+import { MessageCircle, PlusCircle } from "lucide-react";
+import Link from "next/link";
+import path from "path";
+import DeleteChatFileAlert from "./DeleteChatFileAlert";
+import { Button } from "./ui/button";
 
 type Props = {
   chats: Chat[];

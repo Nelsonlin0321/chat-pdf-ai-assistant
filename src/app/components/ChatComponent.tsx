@@ -33,7 +33,7 @@ const ChatComponent = ({ file_key, chat_id, initMessages }: Props) => {
     setMessages,
     error,
   } = useChat({
-    api: "/api/chat",
+    api: "/api/ai/chat",
     body: { file_key, chat_id },
     initialMessages: initMessages,
   });
