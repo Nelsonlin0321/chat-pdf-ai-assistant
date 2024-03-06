@@ -6,10 +6,12 @@ import axios from "axios";
 import toast from "react-hot-toast";
 import { v4 as uuidv4 } from "uuid";
 import FormData from "form-data";
+import { useRouter } from "next/navigation";
 
 const s3RootDir = process.env.NEXT_PUBLIC_S3_ROOT_DIR;
 
 const FileUpload = ({ userId }: { userId: string }) => {
+  const router = useRouter();
   const [isLoading, setLoading] = useState(false);
 
   const { getRootProps, getInputProps } = useDropzone({
@@ -44,6 +46,7 @@ const FileUpload = ({ userId }: { userId: string }) => {
         });
 
         toast.success("Uploaded file successfully");
+        router.push("/chat/" + chatId);
       } catch (error) {
         toast.error("Error creating chat");
       } finally {
