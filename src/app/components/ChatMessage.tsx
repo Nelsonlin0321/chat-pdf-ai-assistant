@@ -64,7 +64,7 @@ const ChatMessage = ({ message, messages, setMessages }: Props) => {
             <PiTrashSimpleBold
               size={15}
               className=" text-slate-400 shrink-0 cursor-pointer"
-              onClick={async () => {
+              onClick={() => {
                 setMessages([...messages.filter((m) => m.id !== message.id)]);
                 axios.delete("/api/message/" + message.id);
               }}

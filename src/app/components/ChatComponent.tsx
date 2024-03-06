@@ -8,6 +8,7 @@ import { Message } from "@prisma/client";
 import StopButton from "./StopButton";
 import { Toaster, toast } from "react-hot-toast";
 import { useEffect } from "react";
+import DeleteChatHistoryAlert from "./DeleteChatHistoryAlert";
 
 type Props = {
   file_key: string;
@@ -36,6 +37,8 @@ const ChatComponent = ({ file_key, chat_id, initMessages }: Props) => {
     body: { file_key, chat_id },
     initialMessages: initMessages,
   });
+
+  // const isLoading = true;
 
   useEffect(() => {
     if (error) {
@@ -69,7 +72,7 @@ const ChatComponent = ({ file_key, chat_id, initMessages }: Props) => {
           className="sticky bottom-0 inset-x-0 px-2 py-10 bg-slate-100"
           onSubmit={handleSubmit}
         >
-          <div className="flex gap-2 w-full">
+          <div className="flex gap-2 w-full mb-2">
             {isLoading ? (
               <StopButton onStop={stop} />
             ) : (
@@ -85,6 +88,7 @@ const ChatComponent = ({ file_key, chat_id, initMessages }: Props) => {
               <Send className="h-4 w-4" />
             </Button>
           </div>
+          <DeleteChatHistoryAlert chatId={chat_id} setMessages={setMessages} />
         </form>
       </div>
       <Toaster />

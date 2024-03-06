@@ -75,7 +75,7 @@ async function buildRAGPrompt(messages: Message[], file_key: string) {
     params: {
       file_key,
       query: lastMessage.content,
-      limit: 5,
+      limit: 8,
       search_type: "hybrid_search",
     },
   });
