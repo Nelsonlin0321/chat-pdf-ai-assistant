@@ -13,7 +13,7 @@ export default async function Home() {
     <div className="w-screen min-h-screen bg-gradient-to-tl from-yellow-100 to-pink-100">
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
         <div className="flex flex-col items-center text-center ">
-          <h1 className="mr-3 text-5xl font-semibold">Chat with any PDF</h1>
+          <h1 className="mr-3 text-5xl font-semibold">PDF AI Assistant</h1>
 
           <div className="flex mt-2">
             {isAuth && (
@@ -24,8 +24,8 @@ export default async function Home() {
           </div>
 
           <p className="max-w-xl mt-1 text-lg text-slate-600">
-            Unlock the Power of Knowledge with PDF: Chat with Any PDF with AI
-            assistant, Anytime, Anywhere.
+            Unlock the Power of Knowledge with PDF AI Assistant: Chat with Any
+            PDF Anytime, Anywhere.
           </p>
 
           <div className="w-full mt-4">
