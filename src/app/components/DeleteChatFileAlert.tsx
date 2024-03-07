@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -15,6 +15,9 @@ import axios from "axios";
 import { PiTrashSimpleBold } from "react-icons/pi";
 import { ChatWindow } from "./ChatSideBar";
 import { useRouter } from "next/navigation";
+import { Toaster, toast } from "react-hot-toast";
+import { Loader2 } from "lucide-react";
+import { Button } from "./ui/button";
 
 type Props = {
   chatId: string;
@@ -28,25 +31,34 @@ const DeleteChatFileAlert = ({
   setChatWindows,
 }: Props) => {
   const router = useRouter();
+  const [isDeleting, setDeleting] = useState(false);
+  const [open, setOpen] = useState(false);
 
-  const onDelete = () => {
-    axios.delete("/api/chat/" + chatId);
+  const onDelete = async () => {
+    try {
+      setDeleting(true);
+      await axios.delete("/api/chat/" + chatId);
 
-    const newChatWindows = chatWindows.filter(
-      (window) => window.chatId !== chatId
-    );
+      const newChatWindows = chatWindows.filter(
+        (window) => window.chatId !== chatId
+      );
 
-    if (newChatWindows.length === 0) {
-      router.push("/");
-    } else {
-      setChatWindows(newChatWindows);
-      const newChatId = newChatWindows[0].chatId;
-      router.push("/chat/" + newChatId);
+      if (newChatWindows.length === 0) {
+        router.push("/");
+      } else {
+        setChatWindows(newChatWindows);
+        const newChatId = newChatWindows[0].chatId;
+        router.push("/chat/" + newChatId);
+      }
+    } catch (error) {
+      toast.error("Error deleting chat");
+    } finally {
+      setDeleting(false);
     }
   };
 
   return (
-    <AlertDialog>
+    <AlertDialog open={open} onOpenChange={setOpen}>
       <AlertDialogTrigger asChild>
         <PiTrashSimpleBold
           size={15}
@@ -63,11 +75,19 @@ const DeleteChatFileAlert = ({
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogCancel>Cancel</AlertDialogCancel>
-          <AlertDialogAction onClick={() => onDelete()} className=" bg-red-500">
-            Continue
-          </AlertDialogAction>
+          <Button
+            onClick={async () => {
+              await onDelete();
+              setOpen(false);
+            }}
+            className=" bg-red-500"
+            disabled={isDeleting}
+          >
+            {isDeleting ? <Loader2 className="animate-spin" /> : "Continue"}
+          </Button>
         </AlertDialogFooter>
       </AlertDialogContent>
+      <Toaster />
     </AlertDialog>
   );
 };

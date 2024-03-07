@@ -14,16 +14,9 @@ export async function DELETE(request: NextRequest, { params }: Props) {
     select: { fileKey: true },
   });
 
-  if (chatFileKey) {
-    await prisma.chat.deleteMany({
-      where: { chatId: chatId },
-    });
-    const fileKey = chatFileKey.fileKey;
-
-    await prisma.uploadedFile.deleteMany({ where: { fileKey: fileKey } });
-
-    apiClient.delete("/delete_file", { params: { file_key: fileKey } });
-  }
+  await prisma.chat.deleteMany({
+    where: { chatId: chatId },
+  });
 
   await prisma.message.deleteMany({
     where: { chatId: chatId },
@@ -32,6 +25,12 @@ export async function DELETE(request: NextRequest, { params }: Props) {
   await prisma.embedding.deleteMany({
     where: { chatId: chatId },
   });
+
+  if (chatFileKey) {
+    const fileKey = chatFileKey.fileKey;
+    await prisma.uploadedFile.deleteMany({ where: { fileKey: fileKey } });
+    apiClient.delete("/delete_file", { data: { file_key: fileKey } });
+  }
 
   return NextResponse.json(
     { message: "Deleted successfully" },
