@@ -1,11 +1,10 @@
 import { GoogleGenerativeAI } from "@google/generative-ai";
 import { GoogleGenerativeAIStream, Message, StreamingTextResponse } from "ai";
-import { DocMeta } from "../../search/route";
 // import { PrismaClient } from "@prisma/client/edge";
 // import { withAccelerate } from "@prisma/extension-accelerate";
 import { auth } from "@clerk/nextjs";
 import prisma from "@/prisma/client";
-import axios from "axios";
+import { search } from "@/lib/search";
 
 // const prisma = new PrismaClient().$extends(withAccelerate());
 
@@ -58,30 +57,18 @@ function getPrompt(message: Message, context: string) {
   } as Message;
 }
 
-async function buildRAGPrompt(messages: Message[], file_key: string) {
+async function buildRAGPrompt(messages: Message[], chat_id: string) {
   const lastMessage = messages[messages.length - 1];
 
-  // const docsResults = await fetch(
-  //   "http://localhost:3000/api/search" +
-  //     "?" +
-  //     `file_key=${file_key}&query=${lastMessage.content}&limit=5`
-  // )
-  //   .then((response) => response.json())
-  //   .then((data) => {
-  //     return data as DocMeta[];
-  //   });
-
-  const response = await axios.get("http://localhost:3000/api/search", {
-    params: {
-      file_key,
-      query: lastMessage.content,
-      limit: 8,
-      search_type: "hybrid_search",
-    },
+  const searchResults = await search({
+    chat_id,
+    query: lastMessage.content,
+    search_type: "hybrid_search",
+    limit: 5,
   });
-  const docsResults = response.data as DocMeta[];
-  const context = docsResults.map((doc) => doc.text).join("\n");
-  // .substring(0, 5000);
+
+  const context = searchResults.map((doc) => doc.text).join("\n");
+
   const prompt: Message = getPrompt(lastMessage, context);
 
   messages[messages.length - 1] = prompt;
@@ -91,10 +78,10 @@ async function buildRAGPrompt(messages: Message[], file_key: string) {
 
 export async function POST(req: Request) {
   // Extract the `prompt` from the body of the request
-  const { messages, file_key, chat_id } = await req.json();
+  const { messages, chat_id } = await req.json();
   const { userId } = await auth();
   const lastMessage = messages[messages.length - 1];
-  const ragPromptMessages = await buildRAGPrompt(messages, file_key);
+  const ragPromptMessages = await buildRAGPrompt(messages, chat_id);
   const chatPrompt = buildChatPrompt(ragPromptMessages);
   const geminiStream = await genAI
     .getGenerativeModel({ model: "gemini-pro" })

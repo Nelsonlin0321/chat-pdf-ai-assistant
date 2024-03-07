@@ -87,8 +87,11 @@ const ChatComponent = ({ file_key, chat_id, initMessages }: Props) => {
             <Button className="bg-blue-600" disabled={isLoading} type="submit">
               <Send className="h-4 w-4" />
             </Button>
+            <DeleteChatHistoryAlert
+              chatId={chat_id}
+              setMessages={setMessages}
+            />
           </div>
-          <DeleteChatHistoryAlert chatId={chat_id} setMessages={setMessages} />
         </form>
       </div>
       <Toaster />
