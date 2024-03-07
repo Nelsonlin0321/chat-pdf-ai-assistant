@@ -8,13 +8,13 @@ interface Props {
 export async function DELETE(request: NextRequest, { params }: Props) {
   const chatId = params.chatId;
 
-  const messages = await prisma.message.findMany({
+  const message = await prisma.message.findFirst({
     where: {
       chatId: chatId,
     },
   });
 
-  if (!messages) {
+  if (!message) {
     return NextResponse.json(
       { error: `The message with chatId ${chatId} doesn't exist!` },
       { status: 404 }
