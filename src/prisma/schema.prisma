@@ -45,6 +45,7 @@ model Embedding {
   wordSize     String       @map("word_size")
   chunkId      Int          @map("chunk_id")
   fileKey      String       @map("file_key")
+  fileName     String       @map("file_name")
   UploadedFile UploadedFile @relation(fields: [fileKey], references: [fileKey])
   embedding    Float[]
 

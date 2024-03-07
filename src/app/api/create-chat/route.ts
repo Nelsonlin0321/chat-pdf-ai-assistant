@@ -5,6 +5,11 @@ import prisma from "@/prisma/client";
 
 export async function POST(request: NextRequest) {
   const { userId } = await auth();
+
+  if (!userId) {
+    return NextResponse.json({ error: "No authorized" }, { status: 401 });
+  }
+
   try {
     const formData = await request.formData();
     const file = formData.get("file");
@@ -39,7 +44,7 @@ export async function POST(request: NextRequest) {
     await prisma.chat.create({
       data: {
         chatId: chat_id,
-        userId: userId!,
+        userId: userId,
         fileKey: file_key,
         fileUrl: `https://d2gewc5xha837s.cloudfront.net/${file_key}`,
       },
