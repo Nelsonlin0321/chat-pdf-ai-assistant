@@ -7,7 +7,7 @@ const Navbar = async () => {
   const isAuth = !!userId;
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-30 bg-gradient-to-r from-red-500 via-orange-500 to-red-500 h-16 flex justify-between items-center px-8">
+    <nav className="shadow-md fixed top-0 left-0 right-0 z-30 bg-gradient-to-r from-red-500 via-orange-500 to-red-500 h-16 flex justify-between items-center px-8">
       <a href="/" className="text-white font-bold text-xl">
         PDF AI Assistant
       </a>
@@ -15,16 +15,16 @@ const Navbar = async () => {
         <a href="/" className="text-white mr-4 hover:text-gray-300">
           Home
         </a>
+        <a href="/chat" className="text-white mr-4 hover:text-gray-300">
+          Chat
+        </a>
         <a href="/about" className="text-white mr-4 hover:text-gray-300">
           About
         </a>
-        <a href="/services" className="text-white mr-4 hover:text-gray-300">
-          Services
-        </a>
+
         <a href="/contact" className="text-white mr-4 hover:text-gray-300">
           Contact
         </a>
-
         {isAuth ? (
           <div className="flex items-center">
             <UserButton afterSignOutUrl="" />

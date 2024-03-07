@@ -35,7 +35,7 @@ const ChatSideBar = ({ chats, chatId }: Props) => {
         className="fixed bottom-24 left-0 z-50 bg-gray-700 text-white p-2 rounded-md hover:bg-gray-600"
         onClick={toggleSidebar}
       >
-        <div className="flex">
+        <div className="flex items-center">
           <svg
             className="w-6 h-6"
             fill="none"
@@ -50,12 +50,18 @@ const ChatSideBar = ({ chats, chatId }: Props) => {
               d="M4 6h16M4 12h16M4 18h16"
             ></path>
           </svg>
-          {showSidebar ? "<-Close Chats" : "Show Chats ->"}
+
+          <div className="flex flex-col">
+            {/* <span>{showSidebar ? "Close Chats" : "Show Chats"}</span>
+             */}
+            <span>PDF Chat Rooms</span>
+            {/* <span>{showSidebar ? "<-" : "->"}</span> */}
+          </div>
         </div>
       </button>
       {/*  flex-[1] max-w-xs */}
       <div
-        className={`flex max-w-xs md: fixed mt-16 inset-y-0 left-0 w-64 bg-white transition-transform duration-300 transform ${
+        className={`flex max-w-xs md: fixed mt-16 inset-y-0 z-10 left-0 w-64 bg-white transition-transform duration-300 transform ${
           showSidebar ? "translate-x-0" : "-translate-x-full"
         }`}
       >
