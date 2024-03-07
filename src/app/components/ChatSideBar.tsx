@@ -4,7 +4,7 @@ import { MessageCircle, PlusCircle } from "lucide-react";
 import Link from "next/link";
 import DeleteChatFileAlert from "./DeleteChatFileAlert";
 import { Button } from "./ui/button";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export type ChatWindow = {
   chatId: string;
@@ -17,7 +17,11 @@ type Props = {
 };
 
 const ChatSideBar = ({ chats, chatId }: Props) => {
-  const [chatWindows, setChatWindows] = useState(chats);
+  const [chatWindows, setChatWindows] = useState<ChatWindow[]>([]);
+
+  useEffect(() => {
+    setChatWindows(chats);
+  }, []);
 
   return (
     <div className="w-full h-screen p-4 text-gray-200 bg-gray-900">
