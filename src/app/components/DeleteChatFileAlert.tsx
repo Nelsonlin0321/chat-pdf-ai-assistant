@@ -13,14 +13,36 @@ import {
 } from "@/components/ui/alert-dialog";
 import axios from "axios";
 import { PiTrashSimpleBold } from "react-icons/pi";
+import { ChatWindow } from "./ChatSideBar";
+import { useRouter } from "next/navigation";
 
 type Props = {
   chatId: string;
+  chatWindows: ChatWindow[];
+  setChatWindows: (chatWindows: ChatWindow[]) => void;
 };
 
-const DeleteChatFileAlert = ({ chatId }: Props) => {
-  const onDelete = async () => {
-    await axios.delete("/api/chat/" + chatId);
+const DeleteChatFileAlert = ({
+  chatId,
+  chatWindows,
+  setChatWindows,
+}: Props) => {
+  const router = useRouter();
+
+  const onDelete = () => {
+    axios.delete("/api/chat/" + chatId);
+
+    const newChatWindows = chatWindows.filter(
+      (window) => window.chatId !== chatId
+    );
+
+    if (newChatWindows.length === 0) {
+      router.push("/");
+    } else {
+      setChatWindows(newChatWindows);
+      const newChatId = newChatWindows[0].chatId;
+      router.push("/chat/" + newChatId);
+    }
   };
 
   return (
@@ -41,10 +63,7 @@ const DeleteChatFileAlert = ({ chatId }: Props) => {
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogCancel>Cancel</AlertDialogCancel>
-          <AlertDialogAction
-            onClick={async () => await onDelete()}
-            className=" bg-red-500"
-          >
+          <AlertDialogAction onClick={() => onDelete()} className=" bg-red-500">
             Continue
           </AlertDialogAction>
         </AlertDialogFooter>

@@ -47,12 +47,12 @@ function getPrompt(message: Message, context: string) {
   return {
     ...message,
     role: "user",
-    content: `Answer below question without any prior knowledge and only based on the given context within CONTEXT BLOCK, 
+    content: `Answer below question without any prior knowledge and only based on the given documents, 
     ,and tell user where you get the answers if the question is relevant to the question: 
     ---------------------
     QUESTION -> ${message.content}.
     ---------------------
-    CONTEXT BLOCK:
+    Documents -> :
     ${context}`,
   } as Message;
 }

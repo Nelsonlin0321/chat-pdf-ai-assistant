@@ -22,6 +22,7 @@ model Chat {
   Message      Message[]
   fileUrl      String       @map("file_url")
   fileKey      String       @unique @map("file_key")
+  fileName     String       @map("file_name")
   uploadedFile UploadedFile @relation(fields: [fileKey], references: [fileKey])
 
   @@index([userId])

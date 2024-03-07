@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { auth } from "@clerk/nextjs";
 import apiClient from "@/app/services/api-client";
 import prisma from "@/prisma/client";
+import path from "path";
 
 export async function POST(request: NextRequest) {
   const { userId } = await auth();
@@ -46,6 +47,7 @@ export async function POST(request: NextRequest) {
         chatId: chat_id,
         userId: userId,
         fileKey: file_key,
+        fileName: path.basename(file_key),
         fileUrl: `https://d2gewc5xha837s.cloudfront.net/${file_key}`,
       },
     });

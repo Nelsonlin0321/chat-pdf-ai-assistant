@@ -9,14 +9,6 @@ interface Props {
 export async function DELETE(request: NextRequest, { params }: Props) {
   const chatId = params.chatId;
 
-  await prisma.message.deleteMany({
-    where: { chatId: chatId },
-  });
-
-  await prisma.embedding.deleteMany({
-    where: { chatId: chatId },
-  });
-
   const chatFileKey = await prisma.chat.findFirst({
     where: { chatId: chatId },
     select: { fileKey: true },
@@ -32,6 +24,14 @@ export async function DELETE(request: NextRequest, { params }: Props) {
 
     apiClient.delete("/delete_file", { params: { file_key: fileKey } });
   }
+
+  await prisma.message.deleteMany({
+    where: { chatId: chatId },
+  });
+
+  await prisma.embedding.deleteMany({
+    where: { chatId: chatId },
+  });
 
   return NextResponse.json(
     { message: "Deleted successfully" },
