@@ -68,3 +68,11 @@ enum Role {
   user      @map("user")
   assistant @map("assistant")
 }
+
+model UserSubscription {
+  id                    String   @id @default(auto()) @map("_id") @db.ObjectId
+  userId                String   @map("user_id")
+  stripCustomerId       String   @map("strip_customer_id")
+  stripPriceId          String   @map("strip_price_id")
+  stripCurrentPeriodEnd DateTime @map("strip_current_period_end")
+}
