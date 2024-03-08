@@ -32,7 +32,7 @@ const ChatSideBar = ({ chats, chatId }: Props) => {
   return (
     <>
       <button
-        className="fixed bottom-24 left-0 z-50 bg-gray-700 text-white p-2 rounded-md hover:bg-gray-600"
+        className="fixed top-20 left-0 z-50 bg-gray-700 text-white p-2 rounded-md hover:bg-gray-600"
         onClick={toggleSidebar}
       >
         <div className="flex items-center">
@@ -65,19 +65,13 @@ const ChatSideBar = ({ chats, chatId }: Props) => {
           showSidebar ? "translate-x-0" : "-translate-x-full"
         }`}
       >
-        <div className="w-full h-screen p-4 text-gray-200 bg-gradient-to-tl from-slate-300 to-zinc-400">
-          <Link href="/">
-            <Button>
-              <PlusCircle className="mr-2 w-4 h-4" />
-              New Chat Room
-            </Button>
-          </Link>
-          <div className="flex flex-col gap-2 mt-4">
+        <div className="w-full h-screen p-4 text-gray-200 bg-gradient-to-tl from-slate-300 to-zinc-400 pt-20">
+          <div className="flex flex-col gap-2 mb-4">
             {chatWindows.map((chat) => (
               <div key={chat.chatId}>
                 <div
                   className={cn(
-                    "rounded-lg p-3 text-slate-800 flex items-center",
+                    "rounded-lg p-3 text-slate-800 flex items-center border-2",
                     {
                       "bg-slate-700 text-white": chat.chatId === chatId,
                       "hover:text-white": chat.chatId !== chatId,
@@ -100,6 +94,12 @@ const ChatSideBar = ({ chats, chatId }: Props) => {
               </div>
             ))}
           </div>
+          <Link href="/">
+            <Button>
+              <PlusCircle className="mr-2 w-4 h-4" />
+              New Chat Room
+            </Button>
+          </Link>
         </div>
       </div>
     </>

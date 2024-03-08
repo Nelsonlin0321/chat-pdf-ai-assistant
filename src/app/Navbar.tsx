@@ -12,15 +12,15 @@ const Navbar = async () => {
         PDF AI Assistant
       </a>
       <div className="flex items-center">
-        <a href="/" className="text-white mr-4 hover:text-gray-300">
+        <Link href="/" className="text-white mr-4 hover:text-gray-300">
           Home
-        </a>
-        <a href="/chat" className="text-white mr-4 hover:text-gray-300">
+        </Link>
+        <Link href="/chat" className="text-white mr-4 hover:text-gray-300">
           Chat
-        </a>
-        <a href="/about" className="text-white mr-4 hover:text-gray-300">
+        </Link>
+        <Link href="/about" className="text-white mr-4 hover:text-gray-300">
           About
-        </a>
+        </Link>
 
         <a href="/contact" className="text-white mr-4 hover:text-gray-300">
           Contact

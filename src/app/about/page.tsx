@@ -14,7 +14,7 @@ const AboutPage: React.FC = () => {
       <main className="container mx-auto px-4 py-8">
         <section className="mb-12">
           <h2 className="text-2xl font-semibold text-gray-800 mb-4">
-            About Us
+            About Me
           </h2>
           <p className="text-gray-600 leading-relaxed">
             We are a pioneering AI software company dedicated to pushing the
@@ -28,7 +28,7 @@ const AboutPage: React.FC = () => {
 
         <section className="mb-12">
           <h2 className="text-2xl font-semibold text-gray-800 mb-4">
-            Our Specialties
+            My Specialties
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             <div className="bg-white rounded-lg shadow-md p-6">
@@ -67,10 +67,10 @@ const AboutPage: React.FC = () => {
 
         <section className="mb-12">
           <h2 className="text-2xl font-semibold text-gray-800 mb-4">
-            Our Mission
+            My Mission
           </h2>
           <p className="text-gray-600 leading-relaxed">
-            Our mission is to harness the power of artificial intelligence to
+            My mission is to harness the power of artificial intelligence to
             solve complex problems and create transformative solutions that
             drive innovation and growth for our clients. We strive to be at the
             forefront of AI technology, constantly exploring new frontiers and
