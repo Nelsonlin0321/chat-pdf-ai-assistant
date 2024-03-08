@@ -35,7 +35,7 @@ const ChatSideBar = ({ chats, chatId }: Props) => {
         className="fixed top-20 left-0 z-50 bg-gray-700 text-white p-2 rounded-md hover:bg-gray-600"
         onClick={toggleSidebar}
       >
-        <div className="flex items-center">
+        <div className="flex items-center gap-2">
           <svg
             className="w-6 h-6"
             fill="none"
@@ -52,10 +52,9 @@ const ChatSideBar = ({ chats, chatId }: Props) => {
           </svg>
 
           <div className="flex flex-col">
-            {/* <span>{showSidebar ? "Close Chats" : "Show Chats"}</span>
-             */}
-            <span>PDF Chat Rooms</span>
-            {/* <span>{showSidebar ? "<-" : "->"}</span> */}
+            <span>
+              {showSidebar ? "Close PDF Chat Rooms" : "Show PDF Chat Rooms"}
+            </span>
           </div>
         </div>
       </button>
@@ -65,8 +64,14 @@ const ChatSideBar = ({ chats, chatId }: Props) => {
           showSidebar ? "translate-x-0" : "-translate-x-full"
         }`}
       >
-        <div className="w-full h-screen p-4 text-gray-200 bg-gradient-to-tl from-slate-300 to-zinc-400 pt-20">
-          <div className="flex flex-col gap-2 mb-4">
+        <div className="w-full h-screen p-4 text-gray-200 bg-gradient-to-tl from-slate-300 to-zinc-400 pt-20 pb-20 overflow-scroll">
+          <Link href="/">
+            <Button>
+              <PlusCircle className="mr-2 w-4 h-4" />
+              New Chat Room
+            </Button>
+          </Link>
+          <div className="flex flex-col gap-2 mt-4">
             {chatWindows.map((chat) => (
               <div key={chat.chatId}>
                 <div
@@ -94,12 +99,6 @@ const ChatSideBar = ({ chats, chatId }: Props) => {
               </div>
             ))}
           </div>
-          <Link href="/">
-            <Button>
-              <PlusCircle className="mr-2 w-4 h-4" />
-              New Chat Room
-            </Button>
-          </Link>
         </div>
       </div>
     </>
