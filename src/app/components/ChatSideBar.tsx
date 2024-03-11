@@ -32,7 +32,7 @@ const ChatSideBar = ({ chats, chatId }: Props) => {
   return (
     <>
       <button
-        className="fixed top-20 left-0 z-50 bg-gray-700 text-white p-2 rounded-md hover:bg-gray-600"
+        className="fixed left-0 z-50 bg-gray-700 text-white p-2 rounded-md hover:bg-gray-600"
         onClick={toggleSidebar}
       >
         <div className="flex items-center gap-2">

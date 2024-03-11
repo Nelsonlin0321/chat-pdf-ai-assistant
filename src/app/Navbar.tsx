@@ -10,20 +10,20 @@ const Navbar = async () => {
   const isPro = await checkSubscription({ userId });
 
   return (
-    <nav className="shadow-md fixed top-0 left-0 right-0 z-30 bg-gradient-to-r from-red-500 via-orange-500 to-red-500 h-16 flex justify-between items-center px-8">
-      <a href="/" className="text-white font-bold text-xl">
+    <nav className="shadow-md top-0 left-0 right-0 z-30 bg-gradient-to-r from-red-500 via-orange-500 to-red-500 h-18 flex justify-between items-center px-8">
+      <a href="/" className="text-white font-bold text-lg">
         PDF AI Assistant
       </a>
-      <div className="flex items-center">
+      <div className="flex items-center flex-wrap">
         <Link href="/" className="text-white mr-4 hover:text-gray-300">
           Home
         </Link>
         <Link href="/chat" className="text-white mr-4 hover:text-gray-300">
           Chat
         </Link>
-        <Link href="/about" className="text-white mr-4 hover:text-gray-300">
+        {/* <Link href="/about" className="text-white mr-4 hover:text-gray-300">
           About
-        </Link>
+        </Link> */}
 
         <Link href="/contact" className="text-white mr-4 hover:text-gray-300">
           Contact
@@ -32,9 +32,7 @@ const Navbar = async () => {
         {isAuth && <SubscriptionButton isPro={isPro} />}
 
         {isAuth ? (
-          <div className="flex items-center">
-            <UserButton afterSignOutUrl="" />
-          </div>
+          <UserButton afterSignOutUrl="" />
         ) : (
           <>
             <Link href={"/sign-in"}>
