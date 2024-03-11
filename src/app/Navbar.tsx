@@ -29,7 +29,7 @@ const Navbar = async () => {
           Contact
         </Link>
 
-        <SubscriptionButton isPro={isPro} />
+        {isAuth && <SubscriptionButton isPro={isPro} />}
 
         {isAuth ? (
           <div className="flex items-center">
@@ -38,7 +38,7 @@ const Navbar = async () => {
         ) : (
           <>
             <Link href={"/sign-in"}>
-              <button className="bg-gray-700 text-white px-4 py-2 rounded-md hover:bg-gray-600 ml-4">
+              <button className=" border border-white text-white px-4 py-2 rounded-md hover:bg-white hover:text-gray-800 ml-2">
                 Login
               </button>
             </Link>
