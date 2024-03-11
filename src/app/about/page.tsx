@@ -3,18 +3,16 @@ import React from "react";
 const AboutPage: React.FC = () => {
   return (
     <div className="min-h-screen bg-gradient-to-tl from-yellow-100 to-pink-100">
-      <header className="py-6">
+      <header className="pt-20">
         <div className="container mx-auto px-4">
-          <h1 className="text-3xl font-bold text-gray-800">
-            AI Software Company
-          </h1>
+          <h1 className="text-3xl font-bold text-gray-800">PDF AI Assistant</h1>
         </div>
       </header>
 
       <main className="container mx-auto px-4 py-8">
         <section className="mb-12">
           <h2 className="text-2xl font-semibold text-gray-800 mb-4">
-            About Me
+            About Us
           </h2>
           <p className="text-gray-600 leading-relaxed">
             We are a pioneering AI software company dedicated to pushing the
@@ -28,7 +26,7 @@ const AboutPage: React.FC = () => {
 
         <section className="mb-12">
           <h2 className="text-2xl font-semibold text-gray-800 mb-4">
-            My Specialties
+            Our Specialties
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             <div className="bg-white rounded-lg shadow-md p-6">
@@ -67,7 +65,7 @@ const AboutPage: React.FC = () => {
 
         <section className="mb-12">
           <h2 className="text-2xl font-semibold text-gray-800 mb-4">
-            My Mission
+            Our Mission
           </h2>
           <p className="text-gray-600 leading-relaxed">
             My mission is to harness the power of artificial intelligence to
@@ -79,14 +77,14 @@ const AboutPage: React.FC = () => {
         </section>
       </main>
 
-      {/* <footer className="bg-gray-800 py-6">
+      <footer className="bg-gray-800 py-6 fixed w-full bottom-0">
         <div className="container mx-auto px-4 text-center">
           <p className="text-white">
-            &copy; {new Date().getFullYear()} AI Software Company. All rights
+            &copy; {new Date().getFullYear()} PDF-AI-Assistant. All rights
             reserved.
           </p>
         </div>
-      </footer> */}
+      </footer>
     </div>
   );
 };
