@@ -14,7 +14,7 @@ export async function POST(req: Request) {
     event = stripe.webhooks.constructEvent(
       body,
       signature,
-      process.env.STRIPE_API_KEY as string
+      process.env.STRIPE_WEBHOOK_SIGNING_SECRET as string
     );
   } catch (error) {
     return new NextResponse("webhook failed", { status: 400 });
@@ -33,7 +33,7 @@ export async function POST(req: Request) {
 
     const userId = session.metadata.userId;
 
-    prisma.userSubscription.create({
+    await prisma.userSubscription.create({
       data: {
         userId: userId,
         stripeSubscriptionId: subscription.id,
