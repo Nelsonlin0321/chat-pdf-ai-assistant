@@ -70,9 +70,10 @@ enum Role {
 }
 
 model UserSubscription {
-  id                    String   @id @default(auto()) @map("_id") @db.ObjectId
-  userId                String   @map("user_id")
-  stripCustomerId       String   @map("strip_customer_id")
-  stripPriceId          String   @map("strip_price_id")
-  stripCurrentPeriodEnd DateTime @map("strip_current_period_end")
+  id                     String   @id @default(auto()) @map("_id") @db.ObjectId
+  userId                 String   @unique @map("user_id")
+  stripeCustomerId       String   @unique @map("stripe_customer_id")
+  stripeSubscriptionId   String   @unique @map("stripe_subscription_id")
+  stripePriceId          String   @map("stripe_price_id")
+  stripeCurrentPeriodEnd DateTime @map("stripe_current_period_end")
 }

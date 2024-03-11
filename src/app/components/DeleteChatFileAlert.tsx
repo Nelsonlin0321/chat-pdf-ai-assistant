@@ -62,7 +62,7 @@ const DeleteChatFileAlert = ({
       <AlertDialogTrigger asChild>
         <PiTrashSimpleBold
           size={15}
-          className=" text-slate-200 shrink-0 cursor-pointer"
+          className=" text-red-600 shrink-0 cursor-pointer"
         />
       </AlertDialogTrigger>
       <AlertDialogContent>

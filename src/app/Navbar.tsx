@@ -1,6 +1,6 @@
 import { UserButton, auth } from "@clerk/nextjs";
-import { LogIn } from "lucide-react";
 import Link from "next/link";
+import SubscriptionButton from "./components/SubscriptionButton";
 
 const Navbar = async () => {
   const { userId } = await auth();
@@ -22,9 +22,12 @@ const Navbar = async () => {
           About
         </Link>
 
-        <a href="/contact" className="text-white mr-4 hover:text-gray-300">
+        <Link href="/contact" className="text-white mr-4 hover:text-gray-300">
           Contact
-        </a>
+        </Link>
+
+        <SubscriptionButton />
+
         {isAuth ? (
           <div className="flex items-center">
             <UserButton afterSignOutUrl="" />
