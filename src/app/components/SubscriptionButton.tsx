@@ -4,7 +4,7 @@ import { useState } from "react";
 import { Button } from "./ui/button";
 import axios from "axios";
 
-const SubscriptionButton = () => {
+const SubscriptionButton = ({ isPro }: { isPro: boolean }) => {
   const [loading, setLoading] = useState(false);
   const handelSubscription = async () => {
     try {
@@ -24,7 +24,7 @@ const SubscriptionButton = () => {
       onClick={async () => await handelSubscription()}
       disabled={loading}
     >
-      Upgrade to Pro
+      {isPro ? "Manage Subscription" : "Upgrade to Pro"}
     </Button>
   );
 };

@@ -1,10 +1,13 @@
 import { UserButton, auth } from "@clerk/nextjs";
 import Link from "next/link";
 import SubscriptionButton from "./components/SubscriptionButton";
+import { checkSubscription } from "@/lib/checkSubscription";
 
 const Navbar = async () => {
   const { userId } = await auth();
   const isAuth = !!userId;
+
+  const isPro = await checkSubscription({ userId });
 
   return (
     <nav className="shadow-md fixed top-0 left-0 right-0 z-30 bg-gradient-to-r from-red-500 via-orange-500 to-red-500 h-16 flex justify-between items-center px-8">
@@ -26,7 +29,7 @@ const Navbar = async () => {
           Contact
         </Link>
 
-        <SubscriptionButton />
+        <SubscriptionButton isPro={isPro} />
 
         {isAuth ? (
           <div className="flex items-center">
