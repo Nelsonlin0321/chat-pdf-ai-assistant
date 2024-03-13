@@ -1,8 +1,8 @@
+import ChatComponent from "@/app/components/ChatComponent";
 import ChatSideBar from "@/app/components/ChatSideBar";
-import { db } from "@/lib/db";
-import { chats } from "@/lib/db/schema";
+import PDFViewer from "@/app/components/PDFViewer";
+import prisma from "@/prisma/client";
 import { auth } from "@clerk/nextjs";
-import { eq } from "drizzle-orm";
 import { redirect } from "next/navigation";
 import React from "react";
 
@@ -19,28 +19,40 @@ const ChatPage = async ({ params: { chatId } }: Props) => {
     return redirect("./sign-in");
   }
 
-  const _chats = await db.select().from(chats).where(eq(chats.userId, userId));
+  const _chats = await prisma.chat.findMany({ where: { userId: userId } });
 
   if (!_chats) {
     return redirect("/");
   }
 
-  if (!_chats.find((chat) => chat.id === parseInt(chatId))) {
-    return redirect("/");
+  const _chat = _chats.find((chat) => chat.chatId === chatId)!;
+
+  if (!_chat) {
+    return redirect("/chat");
   }
 
+  const initMessages = await prisma.message.findMany({
+    where: { chatId: _chat.chatId },
+    // select: {
+    //   id: true,
+    //   content: true,
+    //   role: true,
+    // },
+  });
+
   return (
-    <div className="flex max-h-screen overflow-scroll">
-      <div className="flex w-full  max-h-screen overflow-scroll">
-        {/* chat side bar */}
-        <div className="flex-[1] max-w-xs">
-          <ChatSideBar chats={_chats} chatId={parseInt(chatId)} />
+    <div className="flex max-h-screen bg-slate-100">
+      <div className="flex w-full max-h-screen overflow-scroll">
+        <ChatSideBar chats={_chats} chatId={chatId} />
+        <div className="hidden md:block h-screen p-4 overflow-scroll flex-[5]">
+          <PDFViewer pdf_url={_chat.fileUrl} />
         </div>
-        <div className="max-h-screen p-4 overflow-scroll flex-[5]">
-          {/* PDF Viewer*/}
-        </div>
-        <div className="flex-[3] border-1-4 border-l-slate-200">
-          {/* ChatCOmponent*/}
+        <div className="h-screen flex-[5] border-1-4 border-l-slate-200 overflow-scroll">
+          <ChatComponent
+            file_key={_chat.fileKey}
+            chat_id={_chat.chatId}
+            initMessages={initMessages}
+          />
         </div>
       </div>
     </div>
@@ -48,3 +60,5 @@ const ChatPage = async ({ params: { chatId } }: Props) => {
 };
 
 export default ChatPage;
+
+// https://d2gewc5xha837s.cloudfront.net/chatpdf/user_2cotzAlVmd4jt0TlizIjUV0tzTi/e7df56b6-d40f-4ea4-a5a1-1a3c6199255e/investment_policy_guidelines.pdf

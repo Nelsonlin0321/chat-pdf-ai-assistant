@@ -1,0 +1,79 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+  // directUrl = env("DIRECT_DATABASE_URL")
+}
+
+model Chat {
+  id           String       @id @default(auto()) @map("_id") @db.ObjectId
+  chatId       String       @unique @map("chat_id")
+  createdAt    DateTime     @default(now()) @map("created_at")
+  userId       String       @map("user_id")
+  Message      Message[]
+  fileUrl      String       @map("file_url")
+  fileKey      String       @unique @map("file_key")
+  fileName     String       @map("file_name")
+  uploadedFile UploadedFile @relation(fields: [fileKey], references: [fileKey])
+
+  @@index([userId])
+}
+
+model UploadedFile {
+  id        String      @id @default(auto()) @map("_id") @db.ObjectId
+  fileName  String      @map("file_name")
+  fileUrl   String      @map("file_url")
+  fileKey   String      @unique @map("file_key")
+  fullText  String      @map("full_text")
+  Embedding Embedding[]
+  Chat      Chat?
+}
+
+model Embedding {
+  id           String        @id @default(auto()) @map("_id") @db.ObjectId
+  chatId       String        @map("chat_id")
+  text         String
+  pageNumber   Json          @map("page_number")
+  wordSize     String        @map("word_size")
+  chunkId      Int           @map("chunk_id")
+  fileKey      String        @map("file_key")
+  fileName     String        @map("file_name")
+  UploadedFile UploadedFile? @relation(fields: [fileKey], references: [fileKey])
+  embedding    Float[]
+
+  @@index([chatId])
+  @@index([fileKey])
+}
+
+model Message {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  chatId    String   @map("chat_id")
+  chat      Chat?    @relation(fields: [chatId], references: [chatId])
+  content   String
+  createdAt DateTime @default(now()) @map("created_at")
+  role      Role
+}
+
+enum Role {
+  system    @map("system")
+  user      @map("user")
+  assistant @map("assistant")
+}
+
+model UserSubscription {
+  id                     String   @id @default(auto()) @map("_id") @db.ObjectId
+  userId                 String   @unique @map("user_id")
+  stripeCustomerId       String   @unique @map("stripe_customer_id")
+  stripeSubscriptionId   String   @unique @map("stripe_subscription_id")
+  stripePriceId          String   @map("stripe_price_id")
+  stripeCurrentPeriodEnd DateTime @map("stripe_current_period_end")
+}
