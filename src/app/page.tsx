@@ -27,8 +27,7 @@ export default async function Home() {
           </div>
 
           <p className="max-w-xl mt-1 text-lg text-slate-600">
-            Unlock the Power of Knowledge with PDF AI Assistant: Chat with Any
-            PDF Anytime, Anywhere.
+            Chat with Any PDF Anytime, Anywhere with AI Assistant.
           </p>
 
           <div className="w-full mt-4">

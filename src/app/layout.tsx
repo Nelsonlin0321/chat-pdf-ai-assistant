@@ -8,8 +8,8 @@ import Navbar from "./Navbar";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Chat PDF App",
-  description: "Talk to Your PDF effortless",
+  title: "PDF AI Assistant",
+  description: "Chat with PDF Powered by Genimi",
 };
 
 export default function RootLayout({
