@@ -59,9 +59,22 @@ const ChatComponent = ({ file_key, chat_id, initMessages }: Props) => {
   //   { id: "2", content: "How can I help you?", role: "assistant" },
   // ];
 
+  useEffect(() => {
+    const messageContainer = document.getElementById("message-container");
+    if (messageContainer) {
+      messageContainer.scrollTo({
+        top: messageContainer.scrollHeight,
+        behavior: "smooth",
+      });
+    }
+  }, [messages]);
+
   return (
     <>
-      <div>
+      <div
+        className="relative max-h-screen overflow-scroll"
+        id="message-container"
+      >
         <MessageList
           messages={reconstructedMessages}
           isLoading={isLoading}
@@ -69,7 +82,7 @@ const ChatComponent = ({ file_key, chat_id, initMessages }: Props) => {
         />
 
         <form
-          className="sticky bottom-0 inset-x-0 px-2 py-10 bg-slate-100"
+          className="sticky bottom-0 inset-x-0 px-2 py-4 bg-slate-100"
           onSubmit={handleSubmit}
         >
           <div className="flex gap-2 w-full mb-2">
@@ -93,8 +106,8 @@ const ChatComponent = ({ file_key, chat_id, initMessages }: Props) => {
             />
           </div>
         </form>
+        <Toaster />
       </div>
-      <Toaster />
     </>
   );
 };

@@ -68,7 +68,7 @@ const FileUpload = ({ userId }: { userId: string }) => {
           {isLoading ? (
             <>
               <Loader2 className="h-10 w-10 text-blue-500 animate-spin" />
-              <p> Spilling Tea to GPT...</p>
+              <p> Uploading and Processing File...</p>
             </>
           ) : (
             <>
