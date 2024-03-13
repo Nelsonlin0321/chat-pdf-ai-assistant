@@ -44,7 +44,7 @@ const ChatPage = async ({ params: { chatId } }: Props) => {
     <div className="flex max-h-screen bg-slate-100">
       <div className="flex w-full max-h-screen overflow-scroll">
         <ChatSideBar chats={_chats} chatId={chatId} />
-        <div className="hidden md:block h-screen p-4 overflow-scroll flex-[5]">
+        <div className="hidden md:block h-screen p-4 overflow-scroll flex-[5] pb-16">
           <PDFViewer pdf_url={_chat.fileUrl} />
         </div>
         <div className="h-screen flex-[5] border-1-4 border-l-slate-200 overflow-scroll">

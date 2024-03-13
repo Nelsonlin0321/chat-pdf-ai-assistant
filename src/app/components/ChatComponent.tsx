@@ -72,7 +72,7 @@ const ChatComponent = ({ file_key, chat_id, initMessages }: Props) => {
   return (
     <>
       <div
-        className="relative max-h-screen overflow-scroll mt-10"
+        className="relative h-screen overflow-scroll mt-10"
         id="message-container"
       >
         <MessageList
@@ -82,7 +82,7 @@ const ChatComponent = ({ file_key, chat_id, initMessages }: Props) => {
         />
 
         <form
-          className="sticky bottom-0 inset-x-0 px-2 py-4 bg-slate-100"
+          className="fixed bottom-0 inset-x-0 px-2 py-4 bg-slate-100"
           onSubmit={handleSubmit}
         >
           <div className="flex gap-2 w-full mb-2">
