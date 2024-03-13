@@ -72,7 +72,7 @@ const AboutPage: React.FC = () => {
             solve complex problems and create transformative solutions that
             drive innovation and growth for our clients. We strive to be at the
             forefront of AI technology, constantly exploring new frontiers and
-            pushing the boundaries of what's possible.
+            pushing the boundaries of what is possible.
           </p>
         </section>
       </main>
