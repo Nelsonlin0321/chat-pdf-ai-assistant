@@ -11,7 +11,7 @@ export async function GET() {
     .replace(/\..+/, "");
 
   return NextResponse.json(
-    { message: `The sever is running since ${formattedDateTime}` },
+    { message: `The sever is running at ${formattedDateTime}` },
     { status: 200 }
   );
 }
