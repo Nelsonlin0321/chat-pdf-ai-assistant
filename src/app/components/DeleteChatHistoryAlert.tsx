@@ -11,6 +11,7 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
+import { PiBroom } from "react-icons/pi";
 import { Button } from "@/components/ui/button";
 import { Message } from "ai";
 import axios from "axios";
@@ -29,7 +30,9 @@ const DeleteChatHistoryAlert = ({ chatId, setMessages }: Props) => {
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
-        <Button variant="destructive">Delete Chat History</Button>
+        <Button variant="destructive">
+          <PiBroom size={25} />
+        </Button>
       </AlertDialogTrigger>
       <AlertDialogContent>
         <AlertDialogHeader>
