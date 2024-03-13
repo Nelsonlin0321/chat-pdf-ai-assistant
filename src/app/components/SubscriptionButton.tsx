@@ -20,7 +20,7 @@ const SubscriptionButton = ({ isPro }: { isPro: boolean }) => {
 
   return (
     <Button
-      className="m-1 p-1"
+      className="mr-3 bg-transparent border-2"
       onClick={async () => await handelSubscription()}
       disabled={loading}
     >
