@@ -72,7 +72,7 @@ const ChatComponent = ({ file_key, chat_id, initMessages }: Props) => {
   return (
     <>
       <div
-        className="relative max-h-screen overflow-scroll"
+        className="relative max-h-screen overflow-scroll mt-10"
         id="message-container"
       >
         <MessageList
