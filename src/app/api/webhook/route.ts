@@ -1,23 +1,27 @@
 import { stripe } from "@/lib/stripe";
 import prisma from "@/prisma/client";
-import { headers } from "next/headers";
+import { NextApiRequest, NextApiResponse } from "next";
 import { NextResponse } from "next/server";
+import { buffer } from "stream/consumers";
 import Stripe from "stripe";
-export async function POST(req: Request) {
-  const body = await req.text();
 
-  const signature = headers().get("Stripe-Signature") as string;
+const webhookSecret: string = process.env.STRIPE_WEBHOOK_SIGNING_SECRET!;
+
+export async function POST(req: NextApiRequest, res: NextApiResponse) {
+  const buf = await buffer(req);
+
+  const sig = req.headers["stripe-signature"]!;
 
   let event: Stripe.Event;
 
   try {
-    event = stripe.webhooks.constructEvent(
-      body,
-      signature,
-      process.env.STRIPE_WEBHOOK_SIGNING_SECRET as string
-    );
+    event = stripe.webhooks.constructEvent(buf.toString(), sig, webhookSecret);
   } catch (error) {
-    return new NextResponse("webhook failed", { status: 400 });
+    // On error, log and return the error message
+    console.log(`❌ Error message: ${error}`);
+    res.status(400).send(`Webhook Error: ${error}`);
+    return;
+    // return new NextResponse("webhook failed", { status: 400 });
   }
 
   const session = event.data.object as Stripe.Checkout.Session;
@@ -66,5 +70,3 @@ export async function POST(req: Request) {
 
   return new NextResponse(null, { status: 200 });
 }
-
-export const dynamic = "force-dynamic";
