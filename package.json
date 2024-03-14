@@ -11,7 +11,7 @@
   "dependencies": {
     "@clerk/nextjs": "^4.29.7",
     "@google/generative-ai": "^0.2.1",
-    "@prisma/client": "^5.10.2",
+    "@prisma/client": "^5.11.0",
     "@prisma/extension-accelerate": "^1.0.0",
     "@radix-ui/react-alert-dialog": "^1.0.5",
     "@radix-ui/react-slot": "^1.0.2",
