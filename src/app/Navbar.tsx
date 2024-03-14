@@ -2,7 +2,6 @@ import { UserButton, auth } from "@clerk/nextjs";
 import Link from "next/link";
 import SubscriptionButton from "./components/SubscriptionButton";
 import { checkSubscription } from "@/lib/checkSubscription";
-import { Button } from "./components/ui/button";
 
 const Navbar = async () => {
   const { userId } = await auth();
