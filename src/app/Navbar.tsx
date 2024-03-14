@@ -32,7 +32,7 @@ const Navbar = async () => {
         {isAuth && <SubscriptionButton isPro={isPro} />}
 
         {isAuth ? (
-          <UserButton afterSignOutUrl="" />
+          <UserButton afterSignOutUrl="/" />
         ) : (
           <>
             {/* <Link href={"/sign-in"}>

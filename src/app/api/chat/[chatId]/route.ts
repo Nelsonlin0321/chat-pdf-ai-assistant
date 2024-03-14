@@ -28,7 +28,7 @@ export async function DELETE(request: NextRequest, { params }: Props) {
     apiClient.delete("/delete_file", { data: { file_key: fileKey } });
   }
 
-  await prisma.chat.delete({
+  await prisma.chat.deleteMany({
     where: { chatId: chatId },
   });
 
