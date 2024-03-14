@@ -1,12 +1,11 @@
 import { GoogleGenerativeAI } from "@google/generative-ai";
 import { GoogleGenerativeAIStream, Message, StreamingTextResponse } from "ai";
-// import { PrismaClient } from "@prisma/client/edge";
-// import { withAccelerate } from "@prisma/extension-accelerate";
+import { PrismaClient } from "@prisma/client/edge";
+import { withAccelerate } from "@prisma/extension-accelerate";
 import { auth } from "@clerk/nextjs";
-import prisma from "@/prisma/client";
 import { search } from "@/lib/search";
 
-// const prisma = new PrismaClient().$extends(withAccelerate());
+const prisma = new PrismaClient().$extends(withAccelerate());
 
 const genAI = new GoogleGenerativeAI(process.env.GOOGLE_API_KEY || "");
 
@@ -28,7 +27,7 @@ const buildChatPrompt = (messages: Message[]) => {
   return chatMessages;
 };
 // IMPORTANT! Set the runtime to edge
-// export const runtime = "edge";
+export const runtime = "edge";
 
 // convert messages from the Vercel AI SDK Format to the format
 // that is expected by the Google GenAI SDK
@@ -64,7 +63,7 @@ async function buildRAGPrompt(messages: Message[], chat_id: string) {
     chat_id,
     query: lastMessage.content,
     search_type: "hybrid_search",
-    limit: 5,
+    limit: "5",
   });
 
   const context = searchResults.map((doc) => doc.text).join("\n");

@@ -1,10 +1,10 @@
-import apiClient from "@/app/services/api-client";
+const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL;
 
 type Props = {
   chat_id: string;
   query: string;
   search_type: "keyword_search" | "vector_search" | "hybrid_search";
-  limit: number;
+  limit: string;
 };
 
 export type DocMeta = {
@@ -14,8 +14,18 @@ export type DocMeta = {
 
 export async function search({ chat_id, query, search_type, limit }: Props) {
   const data = { chat_id, query, limit };
-  const response = await apiClient.get("/" + search_type, { params: data });
+  const searchParams = new URLSearchParams(data);
 
-  const searchResults: DocMeta[] = response.data;
+  const response = await fetch(
+    `${BACKEND_URL}/${search_type}?${searchParams}`,
+    {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }
+  );
+
+  const searchResults: DocMeta[] = await response.json();
   return searchResults;
 }

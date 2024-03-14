@@ -1,9 +1,12 @@
 import { stripe } from "@/lib/stripe";
 import prisma from "@/prisma/client";
-import { headers } from "next/headers";
 import { NextResponse } from "next/server";
 import Stripe from "stripe";
-export async function POST(req: Request) {
+import { headers } from "next/headers";
+
+const webhookSecret: string = process.env.STRIPE_WEBHOOK_SIGNING_SECRET!;
+
+export async function POST(req: Request, res: Response) {
   const body = await req.text();
 
   const signature = headers().get("Stripe-Signature") as string;
@@ -11,12 +14,10 @@ export async function POST(req: Request) {
   let event: Stripe.Event;
 
   try {
-    event = stripe.webhooks.constructEvent(
-      body,
-      signature,
-      process.env.STRIPE_WEBHOOK_SIGNING_SECRET as string
-    );
+    event = stripe.webhooks.constructEvent(body, signature, webhookSecret);
   } catch (error) {
+    // On error, log and return the error message
+    console.log(`❌ Error message: ${error}`);
     return new NextResponse("webhook failed", { status: 400 });
   }
 
@@ -66,5 +67,3 @@ export async function POST(req: Request) {
 
   return new NextResponse(null, { status: 200 });
 }
-
-export const dynamic = "force-dynamic";
