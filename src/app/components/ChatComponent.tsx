@@ -86,7 +86,7 @@ const ChatComponent = ({ file_key, chat_id, initMessages }: Props) => {
         />
 
         <form
-          className="fixed bottom-0 inset-x-0 px-2 py-4 bg-slate-100"
+          className="fixed bottom-0 inset-x-0 px-2 py-4 bg-slate-100 overflow-visible z-50"
           onSubmit={handleSubmit}
         >
           <div className="flex gap-2 w-full mb-2 items-center">

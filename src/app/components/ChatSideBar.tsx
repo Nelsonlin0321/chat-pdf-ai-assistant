@@ -32,7 +32,7 @@ const ChatSideBar = ({ chats, chatId }: Props) => {
   return (
     <>
       <button
-        className="fixed left-0 z-50 bg-gray-700 text-white p-2 rounded-md hover:bg-gray-600"
+        className="fixed left-0 z-30 bg-gray-700 text-white p-2 rounded-md hover:bg-gray-600"
         onClick={toggleSidebar}
       >
         <div className="flex items-center gap-2">
@@ -69,7 +69,7 @@ const ChatSideBar = ({ chats, chatId }: Props) => {
               New Chat Room
             </Button>
           </Link>
-          <div className="flex flex-col gap-2 mt-4">
+          <div className="flex flex-col gap-2 mt-4 pb-24">
             {chatWindows.map((chat) => (
               <div key={chat.chatId}>
                 <div
