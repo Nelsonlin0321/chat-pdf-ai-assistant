@@ -1,13 +1,25 @@
 import { Button } from "@/app/components/ui/button";
-import { UserButton, auth } from "@clerk/nextjs";
+import { auth } from "@clerk/nextjs";
 import Link from "next/link";
 import { LogIn } from "lucide-react";
 import FileUpload from "@/app/components/FileUpload";
 import { Toaster } from "react-hot-toast";
 import { hasChat } from "@/lib/hasChat";
+import { cloudRunApiClient } from "@/lib/api-clients";
+
+const logHealthStatus = async () => {
+  try {
+    const response = await cloudRunApiClient.get("/health_check");
+    console.log(response.data);
+  } catch (error) {
+    console.error("Error fetching health status:", error);
+  }
+};
 
 // tailwind css bg Gradient
 export default async function Home() {
+  await logHealthStatus();
+
   const { userId } = await auth();
   const isAuth = !!userId;
   const userHasChat = await hasChat({ userId });
