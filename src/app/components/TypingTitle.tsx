@@ -8,11 +8,11 @@ const TypingTitle = () => {
       <TypeAnimation
         sequence={[
           // Same substring at the start will only be typed out once, initially
-          "PDF AI Assistant to Boost your Productivity",
+          "PDF AI Assistant to Boost Your Productivity",
           1000, // wait 1s before replacing "Mice" with "Hamsters"
-          "PDF AI Assistant to Boost your Performance",
+          "PDF AI Assistant to Boost Your Performance",
           1000,
-          "PDF AI Assistant to Boost your Creativity",
+          "PDF AI Assistant to Boost Your Creativity",
           1000,
         ]}
         wrapper="span"
