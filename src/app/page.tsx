@@ -27,10 +27,10 @@ export default async function Home() {
 
   return (
     <div className="w-screen min-h-screen bg-gradient-to-tl from-yellow-100 to-pink-100">
-      <TypingTitle />
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
         <div className="flex flex-col items-center text-center ">
-          <div className="flex mt-2">
+          <TypingTitle />
+          <div className="flex mt-15">
             {userHasChat && (
               <Link href={"/chat"}>
                 <Button>Go to Chats</Button>
