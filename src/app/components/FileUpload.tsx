@@ -49,7 +49,7 @@ const FileUpload = ({ userId }: { userId: string }) => {
         router.push("/chat/" + chatId);
         router.refresh();
       } catch (error) {
-        toast.error("Error creating chat");
+        toast.error("Fail to upload and process file");
       } finally {
         setLoading(false);
       }
