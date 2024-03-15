@@ -31,7 +31,7 @@ export default async function Home() {
           </p>
 
           <div className="w-full mt-4">
-            {isAuth && userHasChat ? (
+            {isAuth && !userHasChat ? (
               <FileUpload userId={userId} />
             ) : (
               <Link href={"/sign-in"}>

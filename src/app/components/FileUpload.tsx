@@ -1,18 +1,24 @@
 "use client";
 import { Inbox, Loader2 } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useDropzone } from "react-dropzone";
 import axios from "axios";
 import toast from "react-hot-toast";
 import { v4 as uuidv4 } from "uuid";
 import FormData from "form-data";
 import { useRouter } from "next/navigation";
+import { cloudRunApiClient } from "@/lib/api-clients";
 
 const s3RootDir = process.env.NEXT_PUBLIC_S3_ROOT_DIR;
 
 const FileUpload = ({ userId }: { userId: string }) => {
   const router = useRouter();
   const [isLoading, setLoading] = useState(false);
+
+  useEffect(() => {
+    //  start server
+    cloudRunApiClient.get("/health_check");
+  }, []);
 
   const { getRootProps, getInputProps } = useDropzone({
     accept: { "application/pdf": [".pdf"] },
