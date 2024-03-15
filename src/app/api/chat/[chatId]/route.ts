@@ -1,4 +1,4 @@
-import apiClient from "@/app/services/api-client";
+import { cloudRunApiClient } from "@/lib/api-clients";
 import prisma from "@/prisma/client";
 import { NextRequest, NextResponse } from "next/server";
 
@@ -25,7 +25,7 @@ export async function DELETE(request: NextRequest, { params }: Props) {
   if (chatFileKey) {
     const fileKey = chatFileKey.fileKey;
     await prisma.uploadedFile.deleteMany({ where: { fileKey: fileKey } });
-    apiClient.delete("/delete_file", { data: { file_key: fileKey } });
+    cloudRunApiClient.delete("/delete_file", { data: { file_key: fileKey } });
   }
 
   await prisma.chat.deleteMany({

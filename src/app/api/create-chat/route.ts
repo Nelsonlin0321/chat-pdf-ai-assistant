@@ -1,8 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
 import { auth } from "@clerk/nextjs";
-import apiClient from "@/app/services/api-client";
 import prisma from "@/prisma/client";
 import path from "path";
+import { cloudRunApiClient } from "@/lib/api-clients";
 
 export async function POST(request: NextRequest) {
   const { userId } = await auth();
@@ -36,7 +36,7 @@ export async function POST(request: NextRequest) {
         { status: 400 }
       );
     }
-    await apiClient.post("ingest_file", formData, {
+    await cloudRunApiClient.post("ingest_file", formData, {
       headers: {
         "Content-Type": "multipart/form-data",
       },
