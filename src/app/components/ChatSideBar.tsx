@@ -32,7 +32,7 @@ const ChatSideBar = ({ chats, chatId }: Props) => {
   return (
     <>
       <button
-        className="fixed left-0 z-50 bg-gray-700 text-white p-2 rounded-md hover:bg-gray-600"
+        className="fixed left-0 z-30 bg-gray-700 text-white p-2 rounded-md hover:bg-gray-600"
         onClick={toggleSidebar}
       >
         <div className="flex items-center gap-2">
@@ -52,13 +52,11 @@ const ChatSideBar = ({ chats, chatId }: Props) => {
           </svg>
 
           <div className="flex flex-col">
-            <span>
-              {showSidebar ? "Close PDF Chat Rooms" : "Show PDF Chat Rooms"}
-            </span>
+            <p>{showSidebar ? "Close PDF List" : "Show PDF List"}</p>
           </div>
         </div>
       </button>
-      {/*  flex-[1] max-w-xs */}
+
       <div
         className={`flex max-w-xs md: fixed mt-16 inset-y-0 z-10 left-0 w-64 bg-white transition-transform duration-300 transform ${
           showSidebar ? "translate-x-0" : "-translate-x-full"
@@ -71,7 +69,7 @@ const ChatSideBar = ({ chats, chatId }: Props) => {
               New Chat Room
             </Button>
           </Link>
-          <div className="flex flex-col gap-2 mt-4">
+          <div className="flex flex-col gap-2 mt-4 pb-24">
             {chatWindows.map((chat) => (
               <div key={chat.chatId}>
                 <div

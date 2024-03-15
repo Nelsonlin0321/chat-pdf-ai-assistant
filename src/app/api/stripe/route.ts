@@ -42,10 +42,10 @@ export async function GET() {
           price_data: {
             currency: "USD",
             product_data: {
-              name: "ChatPDF Pro",
-              description: "Unlimited PDF Session",
+              name: "AI PDF Assistant Pro Plan",
+              description: "Unlimited Documents and Chats",
             },
-            unit_amount: 90,
+            unit_amount: 190,
             recurring: {
               interval: "month",
             },

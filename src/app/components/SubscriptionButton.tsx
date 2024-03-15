@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import { Button } from "./ui/button";
 import axios from "axios";
 
 const SubscriptionButton = ({ isPro }: { isPro: boolean }) => {
@@ -19,13 +18,13 @@ const SubscriptionButton = ({ isPro }: { isPro: boolean }) => {
   };
 
   return (
-    <Button
-      className="mr-3 bg-transparent border-2"
+    <button
+      className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full bottom-0"
       onClick={async () => await handelSubscription()}
       disabled={loading}
     >
-      {isPro ? "Manage Subscription" : "Upgrade to Pro"}
-    </Button>
+      {isPro ? "Manage Subscription" : "Get Started"}
+    </button>
   );
 };
 

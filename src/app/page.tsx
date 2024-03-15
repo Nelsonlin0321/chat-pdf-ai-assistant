@@ -6,6 +6,7 @@ import FileUpload from "@/app/components/FileUpload";
 import { Toaster } from "react-hot-toast";
 import { hasChat } from "@/lib/hasChat";
 import { cloudRunApiClient } from "@/lib/api-clients";
+import TypingTitle from "./components/TypingTitle";
 
 const logHealthStatus = async () => {
   try {
@@ -26,10 +27,9 @@ export default async function Home() {
 
   return (
     <div className="w-screen min-h-screen bg-gradient-to-tl from-yellow-100 to-pink-100">
+      <TypingTitle />
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
         <div className="flex flex-col items-center text-center ">
-          <h1 className="mr-3 text-5xl font-semibold">PDF AI Assistant</h1>
-
           <div className="flex mt-2">
             {userHasChat && (
               <Link href={"/chat"}>
@@ -42,7 +42,7 @@ export default async function Home() {
             Chat with Any PDF Anytime, Anywhere with AI Assistant.
           </p>
 
-          <div className="w-full mt-4">
+          <div className="min-w-full mt-4">
             {isAuth ? (
               <FileUpload userId={userId} />
             ) : (
