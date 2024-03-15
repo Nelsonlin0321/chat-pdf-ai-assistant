@@ -2,6 +2,7 @@ import { UserButton, auth } from "@clerk/nextjs";
 import Link from "next/link";
 import SubscriptionButton from "./components/SubscriptionButton";
 import { checkSubscription } from "@/lib/checkSubscription";
+import PricingButton from "./components/PricingButton";
 
 const Navbar = async () => {
   const { userId } = await auth();
@@ -29,7 +30,7 @@ const Navbar = async () => {
           Contact
         </Link>
 
-        {isAuth && <SubscriptionButton isPro={isPro} />}
+        {isAuth && <PricingButton isPro={isPro} />}
 
         {isAuth ? (
           <UserButton afterSignOutUrl="/" />
