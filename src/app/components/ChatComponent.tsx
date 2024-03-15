@@ -42,7 +42,7 @@ const ChatComponent = ({ file_key, chat_id, initMessages }: Props) => {
 
   useEffect(() => {
     if (error) {
-      toast.error(error);
+      toast.error(`${error}`);
     }
   }, [error]);
 
