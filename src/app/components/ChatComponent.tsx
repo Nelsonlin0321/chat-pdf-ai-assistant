@@ -7,8 +7,10 @@ import MessageList from "./MessageList";
 import { Message } from "@prisma/client";
 import StopButton from "./StopButton";
 import { Toaster, toast } from "react-hot-toast";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import DeleteChatHistoryAlert from "./DeleteChatHistoryAlert";
+import { Switch } from "@/components/ui/switch";
+import { Label } from "@/components/ui/label";
 
 type Props = {
   file_key: string;
@@ -23,6 +25,8 @@ function extractUserQuestion(text: string): string | null {
 }
 
 const ChatComponent = ({ file_key, chat_id, initMessages }: Props) => {
+  const [chatMode, setChatMode] = useState(false);
+
   const {
     input,
     handleInputChange,
@@ -34,7 +38,7 @@ const ChatComponent = ({ file_key, chat_id, initMessages }: Props) => {
     error,
   } = useChat({
     api: "/api/ai/chat",
-    body: { file_key, chat_id },
+    body: { file_key, chat_id, chatMode },
     initialMessages: initMessages,
   });
 
@@ -85,7 +89,7 @@ const ChatComponent = ({ file_key, chat_id, initMessages }: Props) => {
           className="fixed bottom-0 inset-x-0 px-2 py-4 bg-slate-100"
           onSubmit={handleSubmit}
         >
-          <div className="flex gap-2 w-full mb-2">
+          <div className="flex gap-2 w-full mb-2 items-center">
             {isLoading ? (
               <StopButton onStop={stop} />
             ) : (
@@ -104,6 +108,14 @@ const ChatComponent = ({ file_key, chat_id, initMessages }: Props) => {
               chatId={chat_id}
               setMessages={setMessages}
             />
+            <div className="flex flex-row items-center justify-between rounded-lg border p-2 gap-2">
+              <Switch
+                id="airplane-mode"
+                checked={chatMode}
+                onCheckedChange={() => setChatMode(!chatMode)}
+              />
+              <Label>Disable RAG</Label>
+            </div>
           </div>
         </form>
         <Toaster />

@@ -78,11 +78,20 @@ async function buildRAGPrompt(messages: Message[], chat_id: string) {
 
 export async function POST(req: Request) {
   // Extract the `prompt` from the body of the request
-  const { messages, chat_id } = await req.json();
-  const { userId } = await auth();
+  const { messages, chat_id, chatMode } = await req.json();
+
   const lastMessage = messages[messages.length - 1];
-  const ragPromptMessages = await buildRAGPrompt(messages, chat_id);
-  const chatPrompt = buildChatPrompt(ragPromptMessages);
+
+  let promptMessages: Message[];
+
+  if (!chatMode) {
+    promptMessages = await buildRAGPrompt(messages, chat_id);
+  } else {
+    promptMessages = messages;
+  }
+
+  const chatPrompt = buildChatPrompt(promptMessages);
+
   const geminiStream = await genAI
     .getGenerativeModel({ model: "gemini-pro" })
     .generateContentStream(buildGoogleGenAIPrompt(chatPrompt));
