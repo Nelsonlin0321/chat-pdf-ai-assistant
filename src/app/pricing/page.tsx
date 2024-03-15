@@ -13,7 +13,7 @@ const PricingPage = async () => {
     <div className="min-h-screen bg-gradient-to-tl from-yellow-100 to-pink-100 py-6">
       <div className="container mx-auto px-4">
         <h1 className="text-5xl font-bold text-center mb-8 py-20">
-          Find the best pricing plan for reading PDF
+          Find the best plan for reading PDF
         </h1>
 
         <div className="flex justify-center">
@@ -21,8 +21,10 @@ const PricingPage = async () => {
             {/* Free Plan */}
             <div className="bg-white rounded-lg shadow-md p-8 mx-4 mb-8 md:mb-0">
               <h2 className="text-2xl font-bold mb-4">Free Plan</h2>
-              <p className="text-gray-600 mb-4">For trial</p>
-              <p className="text-4xl font-bold mb-8">$0/Month</p>
+              <p className="text-gray-600 mb-4">For Trial</p>
+              <hr />
+              <p className="text-4xl font-bold mb-8 mt-5">$ 0.0 / Month</p>
+
               <ul className="mb-8">
                 <li className="flex items-center mb-2">
                   <svg
@@ -62,7 +64,8 @@ const PricingPage = async () => {
             <div className="bg-white rounded-lg shadow-md p-8 mx-4">
               <h2 className="text-2xl font-bold mb-4">Pro Plan</h2>
               <p className="text-gray-600 mb-4">For Professional</p>
-              <p className="text-4xl font-bold mb-8">$1.9/Month</p>
+              <hr />
+              <p className="text-4xl font-bold mb-8 mt-5">$ 1.9 / Month</p>
               <ul className="mb-8">
                 <li className="flex items-center mb-2">
                   <svg
