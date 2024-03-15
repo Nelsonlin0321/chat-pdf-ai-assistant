@@ -31,7 +31,7 @@ export default async function Home() {
           <h1 className="mr-3 text-5xl font-semibold">PDF AI Assistant</h1>
 
           <div className="flex mt-2">
-            {isAuth && (
+            {userHasChat && (
               <Link href={"/chat"}>
                 <Button>Go to Chats</Button>
               </Link>
@@ -43,7 +43,7 @@ export default async function Home() {
           </p>
 
           <div className="w-full mt-4">
-            {isAuth && !userHasChat ? (
+            {isAuth ? (
               <FileUpload userId={userId} />
             ) : (
               <Link href={"/sign-in"}>
