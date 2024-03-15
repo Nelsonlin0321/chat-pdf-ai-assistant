@@ -36,7 +36,9 @@ export async function POST(request: NextRequest) {
         { status: 400 }
       );
     }
-    await cloudRunApiClient.post("ingest_file", formData, {
+
+    // due to 10s limit
+    cloudRunApiClient.post("ingest_file", formData, {
       headers: {
         "Content-Type": "multipart/form-data",
       },
