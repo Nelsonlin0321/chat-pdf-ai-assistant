@@ -1,10 +1,17 @@
 import React from "react";
-import { Button } from "./ui/button";
+import Link from "next/link";
 
 type Props = { isPro: boolean };
 
 const PricingButton = ({ isPro }: Props) => {
-  return <Button className="mr-3 bg-transparent border-2 p-1">Pricing</Button>;
+  return (
+    <Link
+      href="/pricing"
+      className="text-white mr-2 hover:text-gray-300  font-semibold"
+    >
+      Pricing
+    </Link>
+  );
 };
 
 export default PricingButton;

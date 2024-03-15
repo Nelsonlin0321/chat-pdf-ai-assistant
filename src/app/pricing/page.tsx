@@ -1,16 +1,21 @@
 // pages/pricing.tsx
 import React from "react";
-import TypingTitle from "../components/TypingTitle";
+import SubscriptionButton from "../components/SubscriptionButton";
+import { auth } from "@clerk/nextjs";
+import { checkSubscription } from "@/lib/checkSubscription";
+import Link from "next/link";
 
-const PricingPage = () => {
+const PricingPage = async () => {
+  const { userId } = auth();
+  const isPro = await checkSubscription({ userId });
+
   return (
     <div className="min-h-screen bg-gradient-to-tl from-yellow-100 to-pink-100 py-6">
       <div className="container mx-auto px-4">
-        <TypingTitle />
-        <hr />
-        <h1 className="text-xl font-bold text-center mb-8 text-slate6700">
-          Pricing Plans
+        <h1 className="text-5xl font-bold text-center mb-8 py-20">
+          Find the best pricing plan for reading PDF
         </h1>
+
         <div className="flex justify-center">
           <div className="flex flex-col md:flex-row">
             {/* Free Plan */}
@@ -49,7 +54,7 @@ const PricingPage = () => {
                 </li>
               </ul>
               <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full">
-                Get Started
+                <Link href={"/"}>Get Started</Link>
               </button>
             </div>
 
@@ -88,9 +93,7 @@ const PricingPage = () => {
                   Unlimited Chat Messages
                 </li>
               </ul>
-              <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full bottom-0">
-                Get Started
-              </button>
+              <SubscriptionButton isPro={isPro} />
             </div>
           </div>
         </div>

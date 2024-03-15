@@ -1,6 +1,5 @@
 import { UserButton, auth } from "@clerk/nextjs";
 import Link from "next/link";
-import SubscriptionButton from "./components/SubscriptionButton";
 import { checkSubscription } from "@/lib/checkSubscription";
 import PricingButton from "./components/PricingButton";
 
@@ -15,18 +14,30 @@ const Navbar = async () => {
       <a href="/" className="text-white font-bold text-lg">
         PDF AI Assistant
       </a>
-      <div className="flex items-center flex-wrap">
-        <Link href="/" className="text-white mr-4 hover:text-gray-300">
+      <div className="flex items-center flex-wrap gap-4">
+        <Link
+          href="/"
+          className="text-white mr-4 hover:text-gray-300 font-semibold"
+        >
           Home
         </Link>
-        <Link href="/chat" className="text-white mr-4 hover:text-gray-300">
+        <Link
+          href="/chat"
+          className="text-white mr-4 hover:text-gray-300  font-semibold"
+        >
           Chat
         </Link>
-        <Link href="/about" className="text-white mr-4 hover:text-gray-300">
+        <Link
+          href="/about"
+          className="text-white mr-4 hover:text-gray-300  font-semibold"
+        >
           About
         </Link>
 
-        <Link href="/contact" className="text-white mr-2 hover:text-gray-300">
+        <Link
+          href="/contact"
+          className="text-white mr-2 hover:text-gray-300  font-semibold"
+        >
           Contact
         </Link>
 
