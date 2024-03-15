@@ -52,13 +52,11 @@ const ChatSideBar = ({ chats, chatId }: Props) => {
           </svg>
 
           <div className="flex flex-col">
-            <span>
-              {showSidebar ? "Close PDF Chat Rooms" : "Show PDF Chat Rooms"}
-            </span>
+            <p>{showSidebar ? "Close PDF List" : "Show PDF List"}</p>
           </div>
         </div>
       </button>
-      {/*  flex-[1] max-w-xs */}
+
       <div
         className={`flex max-w-xs md: fixed mt-16 inset-y-0 z-10 left-0 w-64 bg-white transition-transform duration-300 transform ${
           showSidebar ? "translate-x-0" : "-translate-x-full"

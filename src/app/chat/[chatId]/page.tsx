@@ -42,7 +42,7 @@ const ChatPage = async ({ params: { chatId } }: Props) => {
 
   return (
     <div className="flex max-h-screen bg-slate-100">
-      <div className="flex w-full max-h-screen overflow-scroll">
+      <div className="flex w-full max-h-screen">
         <ChatSideBar chats={_chats} chatId={chatId} />
         <div className="h-screen flex-[5] border-1-4 border-l-slate-200 overflow-scroll">
           <ChatComponent
