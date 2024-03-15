@@ -1,4 +1,4 @@
-const BACKEND_URL = process.env.NEXT_PUBLIC_CLOUDRUN_BACKEND_URL;
+const BACKEND_URL = process.env.NEXT_PUBLIC_LAMBDA_BACKEND_URL;
 
 type Props = {
   chat_id: string;
