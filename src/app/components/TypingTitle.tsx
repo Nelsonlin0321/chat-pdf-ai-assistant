@@ -4,7 +4,7 @@ import React from "react";
 
 const TypingTitle = () => {
   return (
-    <h1 className="text-5xl text-center font-extrabold text-gray-800 py-24">
+    <h1 className="text-3xl text-center font-extrabold text-gray-800 py-24">
       <TypeAnimation
         sequence={[
           // Same substring at the start will only be typed out once, initially
