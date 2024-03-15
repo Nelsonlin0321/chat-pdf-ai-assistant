@@ -7,7 +7,6 @@ import toast from "react-hot-toast";
 import { v4 as uuidv4 } from "uuid";
 import FormData from "form-data";
 import { useRouter } from "next/navigation";
-import { cloudRunApiClient } from "@/lib/api-clients";
 
 const s3RootDir = process.env.NEXT_PUBLIC_S3_ROOT_DIR;
 
