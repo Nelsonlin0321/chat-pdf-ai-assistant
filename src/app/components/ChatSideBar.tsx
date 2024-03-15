@@ -69,7 +69,7 @@ const ChatSideBar = ({ chats, chatId }: Props) => {
               New Chat Room
             </Button>
           </Link>
-          <div className="flex flex-col gap-2 mt-4 pb-24">
+          <div className="flex flex-col gap-2 mt-4 mb-36">
             {chatWindows.map((chat) => (
               <div key={chat.chatId}>
                 <div

@@ -16,7 +16,7 @@ const MessageList = ({ messages, isLoading, setMessages }: Props) => {
   if (!messages) return <></>;
 
   return (
-    <div className="flex flex-col gap-2 px-4 py-2 overflow-scroll">
+    <div className="flex flex-col gap-2 pl-8 py-2 overflow-scroll">
       {messages.map((message) => {
         return (
           <ChatMessage
