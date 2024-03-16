@@ -63,8 +63,8 @@ async function buildRAGPrompt(messages: Message[], chat_id: string) {
   const searchResults = await search({
     chat_id,
     query: lastMessage.content,
-    search_type: "vector_search",
-    limit: "5",
+    search_type: "hybrid_search",
+    limit: "8",
   });
 
   const context = searchResults.map((doc) => doc.text).join("\n");
