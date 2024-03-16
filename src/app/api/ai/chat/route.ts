@@ -85,7 +85,12 @@ export async function POST(req: Request) {
   let promptMessages: Message[];
 
   if (readPDF) {
-    promptMessages = await buildRAGPrompt(messages, chat_id);
+    try {
+      promptMessages = await buildRAGPrompt(messages, chat_id);
+    } catch (error) {
+      console.error("Build RAG Prompt Error", error);
+      promptMessages = messages;
+    }
   } else {
     promptMessages = messages;
   }
