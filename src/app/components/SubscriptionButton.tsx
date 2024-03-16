@@ -12,7 +12,6 @@ const SubscriptionButton = ({ isPro }: { isPro: boolean }) => {
       const response = await axios.get("/api/stripe");
       window.location.href = response.data.url;
     } catch (error) {
-      console.log(error);
     } finally {
       setLoading(false);
     }

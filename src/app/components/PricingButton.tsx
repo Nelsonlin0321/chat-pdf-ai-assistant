@@ -9,7 +9,7 @@ const PricingButton = ({ isPro }: Props) => {
       href="/pricing"
       className="text-white mr-2 hover:text-gray-300  font-semibold"
     >
-      Pricing
+      {isPro ? "Your Plan" : "Upgrade to Pro"}
     </Link>
   );
 };
