@@ -26,6 +26,27 @@ Backend API Github:  https://github.com/Nelsonlin0321/webdev-chat-pdf-api
 
 <img src = "images/architecture.png">
 
+### Backend:
+
+- The FastAPI server acts as the main backend API, handling various routes and functionalities.
+- It uses the Jina framework for embedding text data and performing vector similarity search operations on a MongoDB database for ingested vector data.
+- The "Read & Chunk" component to preprocessing PDF files, potentially splitting them into smaller chunks for embedding and indexing.
+- The "api/hybrid_search" route appears to handle hybrid search queries, combining traditional text search (BM25) with vector similarity search.
+
+### Frontend:
+
+-  The frontend is built with the Next.js React framework, providing server-side rendering and static site generation capabilities.
+-  It integrates with third-party services like Stripe for payment processing, Clerk for user authentication (sign-in, sign-up), and an AI SDK for chat functionality (api/ai/chat).
+- The frontend communicates with the backend API for CRUD operations, likely managing data related to the application's core functionality.
+- Vercel is used for hosting and deploying the Next.js frontend application.
+
+### Data Flow:
+
+- PDF files are ingested through the backend API (api/ingest_file) and processed (read, chunked, embedded) before storing in the vector database.
+- User queries (questions) are embedded using the Jina API, and vector similarity search is performed against the ingested vector database to retrieve relevant chunks or documents.
+- The retrieved chunks are re-ranked using the Rerank Jina API and other algorithms (BM25) to produce the final search results.
+- The frontend interacts with the backend API to fetch and display these search results, as well as to handle other functionality like authentication, payments, and AI-powered chat.
+
 
 ## Run Locally
 
