@@ -2,7 +2,6 @@ import { GoogleGenerativeAI } from "@google/generative-ai";
 import { GoogleGenerativeAIStream, Message, StreamingTextResponse } from "ai";
 // import { PrismaClient } from "@prisma/client/edge";
 // import { withAccelerate } from "@prisma/extension-accelerate";
-import { auth } from "@clerk/nextjs";
 import { search } from "@/lib/search";
 import prisma from "@/prisma/client";
 

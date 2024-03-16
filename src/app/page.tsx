@@ -5,25 +5,20 @@ import { LogIn } from "lucide-react";
 import FileUpload from "@/app/components/FileUpload";
 import { Toaster } from "react-hot-toast";
 import { hasChat } from "@/lib/hasChat";
-import { cloudRunApiClient } from "@/lib/api-clients";
 import TypingTitle from "./components/TypingTitle";
-
-const logHealthStatus = async () => {
-  try {
-    const response = await cloudRunApiClient.get("/health_check");
-    console.log(response.data);
-  } catch (error) {
-    console.error("Error fetching health status:", error);
-  }
-};
+import {
+  getCloudRunHealthStatus,
+  getLambdaHealthStatus,
+} from "@/lib/health-checker";
 
 // tailwind css bg Gradient
 export default async function Home() {
-  await logHealthStatus();
-
   const { userId } = await auth();
   const isAuth = !!userId;
   const userHasChat = await hasChat({ userId });
+
+  await getLambdaHealthStatus();
+  await getCloudRunHealthStatus();
 
   return (
     <div className="w-screen min-h-screen bg-gradient-to-tl from-yellow-100 to-pink-100">

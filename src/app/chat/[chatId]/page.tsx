@@ -1,6 +1,10 @@
 import ChatComponent from "@/app/components/ChatComponent";
 import ChatSideBar from "@/app/components/ChatSideBar";
 import PDFViewer from "@/app/components/PDFViewer";
+import {
+  getCloudRunHealthStatus,
+  getLambdaHealthStatus,
+} from "@/lib/health-checker";
 import prisma from "@/prisma/client";
 import { auth } from "@clerk/nextjs";
 import { redirect } from "next/navigation";
@@ -39,6 +43,9 @@ const ChatPage = async ({ params: { chatId } }: Props) => {
     //   role: true,
     // },
   });
+
+  await getLambdaHealthStatus();
+  await getCloudRunHealthStatus();
 
   return (
     <div className="flex max-h-screen bg-slate-100">
