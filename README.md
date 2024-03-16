@@ -1,4 +1,4 @@
-# ChatPDF: Full Stack Implementation to Build a SaSS RAG (Retrieval Augmented Generation) Application with with Reoccurring Revenue
+# PDF AI Assistant: A Full Stack SaSS RAG (Retrieval Augmented Generation) Application
 
 ## Introduction
 The ChatPDF application is based on the [`youtube video`](https://www.youtube.com/watch?v=r895rFUbGtE&t=15158s) with the secondary development.   
@@ -22,19 +22,16 @@ The application allow users to upload PDF document and ask questions related to 
 
 ## Overall Architecture
 
+Backend API Github:  https://github.com/Nelsonlin0321/webdev-chat-pdf-api
+
 <img src = "images/architecture.png">
 
 
 ## Run Locally
 
 ```bash
+npm run install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
