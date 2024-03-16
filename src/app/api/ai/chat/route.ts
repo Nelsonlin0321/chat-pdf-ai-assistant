@@ -78,13 +78,13 @@ async function buildRAGPrompt(messages: Message[], chat_id: string) {
 
 export async function POST(req: Request) {
   // Extract the `prompt` from the body of the request
-  const { messages, chat_id, chatMode } = await req.json();
+  const { messages, chat_id, readPDF } = await req.json();
 
   const lastMessage = messages[messages.length - 1];
 
   let promptMessages: Message[];
 
-  if (!chatMode) {
+  if (readPDF) {
     promptMessages = await buildRAGPrompt(messages, chat_id);
   } else {
     promptMessages = messages;
