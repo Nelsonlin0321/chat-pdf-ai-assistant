@@ -25,7 +25,7 @@ function extractUserQuestion(text: string): string | null {
 }
 
 const ChatComponent = ({ file_key, chat_id, initMessages }: Props) => {
-  const [chatMode, setChatMode] = useState(false);
+  const [readPDF, setReadPDF] = useState(true);
 
   const {
     input,
@@ -38,7 +38,7 @@ const ChatComponent = ({ file_key, chat_id, initMessages }: Props) => {
     error,
   } = useChat({
     api: "/api/ai/chat",
-    body: { file_key, chat_id, chatMode },
+    body: { file_key, chat_id, readPDF },
     initialMessages: initMessages,
   });
 
@@ -111,10 +111,10 @@ const ChatComponent = ({ file_key, chat_id, initMessages }: Props) => {
             <div className="flex flex-row items-center justify-between rounded-lg border p-2 gap-2">
               <Switch
                 id="airplane-mode"
-                checked={chatMode}
-                onCheckedChange={() => setChatMode(!chatMode)}
+                checked={readPDF}
+                onCheckedChange={() => setReadPDF(!readPDF)}
               />
-              <Label>Disable RAG</Label>
+              <Label>Read PDF</Label>
             </div>
           </div>
         </form>
