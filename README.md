@@ -1,8 +1,9 @@
 # PDF AI Assistant: A Full Stack SaSS RAG (Retrieval Augmented Generation) Application
 
 ## Introduction
-The ChatPDF application is based on the [`youtube video`](https://www.youtube.com/watch?v=r895rFUbGtE&t=15158s) with the secondary development.   
-The application allow users to upload PDF document and ask questions related to the selected document. It achieves this by retrieving pertinent data or documents related to a specific question or task and utilizing them as contextual information for the LLM.
+The SaSS application is based on the [`youtube video`](https://www.youtube.com/watch?v=r895rFUbGtE&t=15158s) with the secondary development.   
+A modern full-stack web application that allows users to upload PDF files, perform hybrid search on the contents, and engage in AI-powered chat conversations powered by Google Genimi.
+
 
 ## Highlights
 - MongoDB Atlas for storage, vector search, keyword search and customized hybrid search.
@@ -22,22 +23,23 @@ The application allow users to upload PDF document and ask questions related to 
 
 ## Overall Architecture
 
-Backend API Github:  https://github.com/Nelsonlin0321/webdev-chat-pdf-api
+Backend API Github:  https://github.com/Nelsonlin0321/chat-pdf-ai-assistant-fastapi
 
 <img src = "images/architecture.png">
 
 ### Backend:
 
-- The FastAPI server acts as the main backend API, handling various routes and functionalities.
-- It uses the Jina framework for embedding text data and performing vector similarity search operations on a MongoDB database for ingested vector data.
-- The "Read & Chunk" component to preprocessing PDF files, potentially splitting them into smaller chunks for embedding and indexing.
-- The "api/hybrid_search" route appears to handle hybrid search queries, combining traditional text search (BM25) with vector similarity search.
+- The FastAPI server acts as the main backend API, handling complex logic.
+- It uses the Jina framework for embedding text data and reranking for retrieval data.
+- MongoDB act the the backend database and perform vector similarity and keyword search operations for ingested vector and text. 
+- The custom "Read & Chunk" component to preprocessing PDF files, splitting pages to sentence and them merge them into chunks for embedding and indexing.
+- The "api/hybrid_search" route handle hybrid search queries, combining traditional text search (BM25) with vector similarity search with Jina AI reranking.
 
 ### Frontend:
 
 -  The frontend is built with the Next.js React framework, providing server-side rendering and static site generation capabilities.
 -  It integrates with third-party services like Stripe for payment processing, Clerk for user authentication (sign-in, sign-up), and an AI SDK for chat functionality (api/ai/chat).
-- The frontend communicates with the backend API for CRUD operations, likely managing data related to the application's core functionality.
+- The frontend communicates with the backend API for CRUD operations, managing data related to the application's core functionality.
 - Vercel is used for hosting and deploying the Next.js frontend application.
 
 ### Data Flow:
