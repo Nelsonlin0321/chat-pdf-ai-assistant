@@ -6,10 +6,7 @@ import FileUpload from "@/app/components/FileUpload";
 import { Toaster } from "react-hot-toast";
 import { hasChat } from "@/lib/hasChat";
 import TypingTitle from "./components/TypingTitle";
-import {
-  getCloudRunHealthStatus,
-  getLambdaHealthStatus,
-} from "@/lib/health-checker";
+import { cloudRunApiClient, lambdaApiClient } from "@/lib/api-clients";
 
 // tailwind css bg Gradient
 export default async function Home() {
@@ -17,8 +14,8 @@ export default async function Home() {
   const isAuth = !!userId;
   const userHasChat = await hasChat({ userId });
 
-  await getLambdaHealthStatus();
-  await getCloudRunHealthStatus();
+  lambdaApiClient.get("/health_check");
+  cloudRunApiClient.get("/health_check");
 
   return (
     <div className="w-screen min-h-screen bg-gradient-to-tl from-yellow-100 to-pink-100">
