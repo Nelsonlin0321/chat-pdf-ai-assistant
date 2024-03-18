@@ -46,8 +46,7 @@ function getPrompt(message: Message, context: string) {
   return {
     ...message,
     role: "user",
-    content: `Answer below question without any prior knowledge and only based on the given documents, 
-    ,and tell user where you get the answers if the question is relevant to the question: 
+    content: `Please provide a detailed answer to the question, drawing information from the provided documents as needed. If the question cannot be fully answered using the documents, kindly state that and provide any relevant additional information that you can. When referencing information from the documents, please quote or paraphrase the relevant sections and cite the source document. 
     ---------------------
     QUESTION -> ${message.content}.
     ---------------------
