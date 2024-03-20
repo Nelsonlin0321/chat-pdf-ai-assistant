@@ -14,8 +14,8 @@ export default async function Home() {
   const isAuth = !!userId;
   const userHasChat = await hasChat({ userId });
 
-  lambdaApiClient.get("/health_check");
-  cloudRunApiClient.get("/health_check");
+  const lambdaApiPromise = lambdaApiClient.get("/health_check");
+  const cloudRunPromise = cloudRunApiClient.get("/health_check");
 
   return (
     <div className="w-screen min-h-screen bg-gradient-to-tl from-yellow-100 to-pink-100">
