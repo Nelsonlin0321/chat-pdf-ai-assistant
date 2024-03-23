@@ -7,6 +7,7 @@ export default authMiddleware({
     "/api/health-check",
     "/about",
     "/contact",
+    "/monitoring",
   ],
 });
 

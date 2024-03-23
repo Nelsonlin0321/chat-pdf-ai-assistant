@@ -42,7 +42,7 @@ const ChatPage = async ({ params: { chatId } }: Props) => {
   });
 
   const lambdaApiPromise = lambdaApiClient.get("/health_check");
-  const cloudRunPromise = cloudRunApiClient.get("/health_check");
+  // const cloudRunPromise = cloudRunApiClient.get("/health_check");
 
   return (
     <div className="flex max-h-screen bg-slate-100">
